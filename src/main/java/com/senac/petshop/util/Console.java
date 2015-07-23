@@ -10,31 +10,39 @@ public class Console {
 
     private static final Scanner scanner = new Scanner(System.in);
     
+    private static void imprimir(String texto) {
+        System.out.print(">>> " + texto + " ");
+    }
+    
+    private static void pularLinha() {
+        System.out.println();
+    }
+    
     public static String lerString(String texto) {        
-        System.out.print(texto + " ");
+        imprimir(texto);
         String valor = scanner.next();
-        System.out.println("");
+        pularLinha();
         return valor;
     }
     
     public static Double lerDouble(String texto) {        
-        System.out.print(texto + " ");
+        imprimir(texto);
         Double valor = scanner.nextDouble();
-        System.out.println("");
+        pularLinha();
         return valor;
     }
     
     public static Long lerLong(String texto) {        
-        System.out.print(texto + " ");
+        imprimir(texto);
         Long valor = scanner.nextLong();
-        System.out.println("");
+        pularLinha();
         return valor;
     }
     
     public static Integer lerInteger(String texto) {        
-        System.out.print(texto + " ");
+        imprimir(texto);
         Integer valor = scanner.nextInt();
-        System.out.println("");
+        pularLinha();
         return valor;
     }
     
