@@ -12,7 +12,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         
         MenuConsole mc = new MenuConsole("PetShop4j Senac", 
-                "Sistema utilizado na disciplina de LAB2 do Senac (ADS)",
+                "Controle de Pet Shop (Desktop)",
                 App.class);
         mc.adicionarAcao("Cadastrar Dono", "cadastrarDono");
         mc.adicionarAcao("Cadastrar Animal", "cadastrarAnimal");
