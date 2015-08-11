@@ -40,7 +40,9 @@ public class MenuConsole {
     
     public String getTexto() {
         StringBuilder sb = new StringBuilder();
-        sb.append("-- ").append(nomeSistema).append(" --\r\n");
+        sb.append("\r\n\r\n");
+        sb.append("///////////////////////////////////////////////////////\r\n");
+        sb.append(nomeSistema).append("\r\n");
         sb.append(descricao).append("\r\n\r\n");
         
         for(Integer codigo : codigoAcao.keySet()) {
@@ -48,7 +50,7 @@ public class MenuConsole {
                     append(acaoTexto.get(codigoAcao.get(codigo))).append("\r\n");
         }
         
-        sb.append("\r\n\r\n");
+        sb.append("\r\n");
         
         return sb.toString();
     }

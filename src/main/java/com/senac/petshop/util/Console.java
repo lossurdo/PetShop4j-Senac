@@ -10,6 +10,12 @@ public class Console {
 
     private static final Scanner scanner = new Scanner(System.in);
     
+    public static void mensagem(Object texto) {
+        System.out.print(">>> " + texto + " ");
+        pularLinha();
+        pularLinha();
+    }
+    
     private static void imprimir(String texto) {
         System.out.print(">>> " + texto + " ");
     }
@@ -46,4 +52,10 @@ public class Console {
         return valor;
     }
     
+    public static void cabecalho(String texto) {
+        pularLinha();
+        System.out.println("=====================================");
+        System.out.println(texto);
+        System.out.println("=====================================");
+    }
 }
