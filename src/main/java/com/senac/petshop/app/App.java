@@ -1,11 +1,15 @@
 package com.senac.petshop.app;
 
+import com.senac.petshop.bean.Animal;
+import com.senac.petshop.bean.CorPredominante;
 import com.senac.petshop.bean.Dono;
+import com.senac.petshop.bean.TipoAnimal;
 import com.senac.petshop.util.Console;
 import com.senac.petshop.util.MenuConsole;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  *
@@ -13,7 +17,7 @@ import java.util.Date;
  */
 public class App {
 
-    private static ArrayList<Dono> listaDonoAnimal = new ArrayList<>();
+    private static HashSet<Dono> listaDonoAnimal = new HashSet<>();
 
     public static void main(String[] args) throws Exception {
 
@@ -24,8 +28,7 @@ public class App {
                     App.class);
             mc.adicionarAcao("Cadastrar Dono", "cadastrarDono");
             mc.adicionarAcao("Cadastrar Animal", "cadastrarAnimal");
-            mc.adicionarAcao("Vincular Dono aos seus Animais", "vincularDonoAnimal");
-            mc.adicionarAcao("Listar Tudo", "listarTudo");
+            mc.adicionarAcao("Listar Animais vs. Donos", "listarTudo");
             mc.adicionarAcao("Sair", "sair");
 
             System.out.println(mc.getTexto());
@@ -38,7 +41,7 @@ public class App {
     }
 
     public void listarTudo() {
-        Console.cabecalho("Listando Tudo");
+        Console.cabecalho("Listando Animais vs. Donos");
         for (Dono dono : listaDonoAnimal) {
             Console.mensagem(dono);
         }
@@ -82,6 +85,61 @@ public class App {
         Console.mensagem("Dono cadastrado com sucesso!");
     }
 
+    public void cadastrarAnimal() throws Exception {
+        Console.cabecalho("Cadastro de Animal");
+
+        // dados do dono pra leitura via teclado
+        Integer codigo;
+        String nome;
+        Date dataNascimento;
+        String txtTipo;
+        TipoAnimal tipoAnimal;
+        String descricao;
+        String txtCor;
+        CorPredominante corPredominante;
+        Dono dono;
+        
+        boolean cadastroOK = true;        
+        do {
+            codigo = Console.lerInteger("Código");
+            nome = Console.lerString("Nome");
+            String dataNascimentoTexto = Console.lerString("Data de Nascimento (ex. 31/12/2015)");
+            dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(dataNascimentoTexto);
+            
+            txtTipo = Console.lerEnum("Tipo", TipoAnimal.class);
+            tipoAnimal = TipoAnimal.valueOf(txtTipo);
+            descricao = Console.lerString("Descrição");
+            txtCor = Console.lerEnum("Cor", CorPredominante.class);
+            corPredominante = CorPredominante.valueOf(txtCor);
+            
+            Console.mensagem("Listagem de Donos");
+            HashMap<Integer, Dono> hm = new HashMap<>();
+            int o = 1;
+            for(Dono d : listaDonoAnimal) {                
+                Console.mensagem(o + "-" + d.getNome());
+                hm.put(o, d);
+                o++;
+            }
+            int opcao = Console.lerInteger("Qual a sua opção?");
+            dono = hm.get(opcao);
+            
+            Animal a = new Animal();
+            a.setCodigo(codigo);
+            a.setNome(nome);
+            a.setDataNascimento(dataNascimento);
+            a.setDescricao(descricao);
+            a.setCorPredominante(corPredominante);
+            a.setTipoAnimal(tipoAnimal);
+            a.setDono(dono);
+            
+            dono.getAnimais().add(a);
+            
+            listaDonoAnimal.add(dono);
+            
+            Console.mensagem("Animal cadastrado e vinculado ao seu Dono com sucesso!");
+        } while(!cadastroOK);
+    }
+    
     public void sair() {
         System.exit(0);
     }

@@ -1,5 +1,7 @@
 package com.senac.petshop.util;
 
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -50,6 +52,22 @@ public class Console {
         Integer valor = scanner.nextInt();
         pularLinha();
         return valor;
+    }
+    
+    public static String lerEnum(String texto, Class<? extends Enum> clazz) {
+        HashMap<Integer, String> hm = new HashMap<>();
+        int o = 1;
+        for(Object obj : EnumSet.allOf(clazz)) {
+            Enum e = (Enum) obj;
+            imprimir(o + "-" + e.name());
+            pularLinha();
+            hm.put(o, e.name());
+            o++;
+        }
+        imprimir("Qual a sua opção? ");
+        Integer valor = scanner.nextInt();
+        pularLinha();
+        return hm.get(valor);
     }
     
     public static void cabecalho(String texto) {
