@@ -1,49 +1,52 @@
 package com.senac.petshop.rn;
 
+import com.senac.petshop.rnval.AnimalRNVal;
 import com.senac.petshop.bd.AnimalBD;
+import com.senac.petshop.infra.CrudBD;
 import com.senac.petshop.bean.Animal;
-import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author lossurdo
  */
-public class AnimalRN extends GenericoRN<Animal> {
+public class AnimalRN extends CrudBD<Animal> {
+    
+    private final AnimalBD animalBD;
+    private final AnimalRNVal animalRNVal;
 
     public AnimalRN() {
-        super(new AnimalBD());
+        animalBD = new AnimalBD();
+        animalRNVal = new AnimalRNVal();
     }
 
     @Override
-    public Animal salvar(Animal objeto) {
-        if (objeto.getCodigo() == null) {
-            throw new RuntimeException("Campo Código não informado");
-        }
-
-        if (objeto.getNome() == null) {
-            throw new RuntimeException("Campo Nome não informado");
-        }
-
-        if (objeto.getDono() == null || objeto.getDono().getCodigo() == null) {
-            throw new RuntimeException("Campo Dono não informado");
-        }
-
-        return (Animal) getObjetoBD().salvar(objeto);
+    public void salvar(Animal bean) {
+        animalRNVal.validarSalvar(bean);
+        animalBD.salvar(bean);
     }
 
     @Override
-    public Animal consultar(Animal objeto) {
-        return (Animal) getObjetoBD().consultar(objeto);
+    public void excluir(Animal bean) {
+        animalRNVal.validarExcluir(bean);
+        animalBD.excluir(bean);
     }
 
     @Override
-    public void excluir(Animal objeto) {
-        getObjetoBD().excluir(objeto);
+    public Animal consultar(Animal bean) {
+        animalRNVal.validarConsultar(bean);
+        return animalBD.consultar(bean);
     }
 
     @Override
-    public List<Animal> pesquisar(Animal objeto) {
-        return getObjetoBD().pesquisar(objeto);
+    public void alterar(Animal bean) {
+        animalRNVal.validarAlterar(bean);
+        animalBD.alterar(bean);
+    }
+
+    @Override
+    public Set<Animal> pesquisar(Animal bean) {
+        return animalBD.pesquisar(bean);
     }
 
 }

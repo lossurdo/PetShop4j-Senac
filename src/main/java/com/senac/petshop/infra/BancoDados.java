@@ -1,4 +1,4 @@
-package com.senac.petshop.util;
+package com.senac.petshop.infra;
 
 import com.senac.petshop.bean.Agenda;
 import com.senac.petshop.bean.Animal;
