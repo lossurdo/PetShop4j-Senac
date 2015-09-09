@@ -1,29 +1,49 @@
 package com.senac.petshop.rn;
 
+import com.senac.petshop.bd.AnimalBD;
 import com.senac.petshop.bean.Animal;
+import java.util.List;
 
 /**
  *
  * @author lossurdo
  */
-public class AnimalRN {
+public class AnimalRN extends GenericoRN<Animal> {
 
-    public boolean validaIncluir(Animal animal) {
-        boolean registroOK = true;
+    public AnimalRN() {
+        super(new AnimalBD());
+    }
 
-        if (animal.getCodigo() == null) {
-            registroOK = false;
+    @Override
+    public Animal salvar(Animal objeto) {
+        if (objeto.getCodigo() == null) {
+            throw new RuntimeException("Campo Código não informado");
         }
 
-        if (animal.getNome() == null) {
-            registroOK = false;
+        if (objeto.getNome() == null) {
+            throw new RuntimeException("Campo Nome não informado");
         }
 
-        if (animal.getDono() == null || animal.getDono().getCodigo() == null) {
-            registroOK = false;
+        if (objeto.getDono() == null || objeto.getDono().getCodigo() == null) {
+            throw new RuntimeException("Campo Dono não informado");
         }
 
-        return registroOK;
+        return (Animal) getObjetoBD().salvar(objeto);
+    }
+
+    @Override
+    public Animal consultar(Animal objeto) {
+        return (Animal) getObjetoBD().consultar(objeto);
+    }
+
+    @Override
+    public void excluir(Animal objeto) {
+        getObjetoBD().excluir(objeto);
+    }
+
+    @Override
+    public List<Animal> pesquisar(Animal objeto) {
+        return getObjetoBD().pesquisar(objeto);
     }
 
 }
