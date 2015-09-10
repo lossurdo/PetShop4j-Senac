@@ -4,14 +4,15 @@ import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.CorPredominante;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.bean.TipoAnimal;
+import com.senac.petshop.infra.BancoDados;
 import com.senac.petshop.rn.AnimalRN;
 import com.senac.petshop.rn.DonoRN;
+import com.senac.petshop.util.CadastradorAutomatico;
 import com.senac.petshop.util.Console;
 import com.senac.petshop.util.MenuConsole;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  *
@@ -19,9 +20,9 @@ import java.util.HashSet;
  */
 public class App {
 
-    private static HashSet<Dono> listaDonoAnimal = new HashSet<>();
-
     public static void main(String[] args) throws Exception {
+        // geração de dados automáticos
+        CadastradorAutomatico.popular();
 
         // enquanto não optado por "sair"
         while (true) {
@@ -44,7 +45,7 @@ public class App {
 
     public void listarTudo() {
         Console.cabecalho("Listando Animais vs. Donos");
-        for (Dono dono : listaDonoAnimal) {
+        for (Dono dono : BancoDados.getInstance().getListaDono()) {
             Console.mensagem(dono);
         }
     }
@@ -83,11 +84,11 @@ public class App {
         dono.setDataNascimento(dataNascimento);
 
         DonoRN rn = new DonoRN();
-        if (rn.validaIncluir(dono)) {
-            listaDonoAnimal.add(dono);
+        try {
+            rn.salvar(dono);
             Console.mensagem("Dono cadastrado com sucesso!");
-        } else {
-            Console.mensagem("Impossível cadastrar registro! Dados informados violam regras de negócio.");
+        } catch (Exception e) {
+            Console.mensagem("Problema no cadastramento: " + e.getMessage());
         }
     }
 
@@ -121,7 +122,7 @@ public class App {
             Console.mensagem("Listagem de Donos");
             HashMap<Integer, Dono> hm = new HashMap<>();
             int o = 1;
-            for (Dono d : listaDonoAnimal) {
+            for (Dono d : BancoDados.getInstance().getListaDono()) {
                 Console.mensagem(o + "-" + d.getNome());
                 hm.put(o, d);
                 o++;
@@ -136,16 +137,16 @@ public class App {
             a.setDescricao(descricao);
             a.setCorPredominante(corPredominante);
             a.setTipoAnimal(tipoAnimal);
-            a.setDono(dono);
 
+            // vinculando animal ao dono
             dono.getAnimais().add(a);
 
             AnimalRN rn = new AnimalRN();
-            if (rn.validaIncluir(a)) {
-                listaDonoAnimal.add(dono);
+            try {
+                rn.salvar(a);
                 Console.mensagem("Animal cadastrado e vinculado ao seu Dono com sucesso!");
-            } else {
-                Console.mensagem("Impossível cadastrar registro! Dados informados violam regras de negócio.");
+            } catch (Exception e) {
+                Console.mensagem("Problema no cadastramento: " + e.getMessage());
             }
         } while (!cadastroOK);
     }

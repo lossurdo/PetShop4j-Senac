@@ -35,6 +35,7 @@ public class DonoBD extends CrudBD<Dono> {
 
     @Override
     public void alterar(Dono bean) {
+        BancoDados.getInstance().getListaDono().remove(bean);
         BancoDados.getInstance().getListaDono().add(bean);
     }
 

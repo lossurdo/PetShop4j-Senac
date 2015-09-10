@@ -35,6 +35,7 @@ public class AnimalBD extends CrudBD<Animal>{
 
     @Override
     public void alterar(Animal bean) {
+        BancoDados.getInstance().getListaAnimal().remove(bean);
         BancoDados.getInstance().getListaAnimal().add(bean);
     }
 

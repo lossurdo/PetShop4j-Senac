@@ -4,8 +4,7 @@ import com.senac.petshop.bean.Agenda;
 import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.bean.Procedimento;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 /**
  * Simulação intermediária para persistência
@@ -16,16 +15,16 @@ import java.util.List;
  */
 public class BancoDados {
     
-    private static List<Agenda> listaAgenda;
-    private static List<Animal> listaAnimal;
-    private static List<Dono> listaDono;
-    private static List<Procedimento> listaProcedimento;
+    private static HashSet<Agenda> listaAgenda;
+    private static HashSet<Animal> listaAnimal;
+    private static HashSet<Dono> listaDono;
+    private static HashSet<Procedimento> listaProcedimento;
     
     private BancoDados() {
-        listaAgenda = new ArrayList<>();
-        listaAnimal = new ArrayList<>();
-        listaDono = new ArrayList<>();
-        listaProcedimento = new ArrayList<>();
+        listaAgenda = new HashSet<>();
+        listaAnimal = new HashSet<>();
+        listaDono = new HashSet<>();
+        listaProcedimento = new HashSet<>();
     }
     
     public static BancoDados getInstance() {
@@ -36,19 +35,19 @@ public class BancoDados {
         private static final BancoDados INSTANCE = new BancoDados();
     }
 
-    public List<Agenda> getListaAgenda() {
+    public HashSet<Agenda> getListaAgenda() {
         return listaAgenda;
     }
 
-    public List<Animal> getListaAnimal() {
+    public HashSet<Animal> getListaAnimal() {
         return listaAnimal;
     }
 
-    public List<Dono> getListaDono() {
+    public HashSet<Dono> getListaDono() {
         return listaDono;
     }
 
-    public List<Procedimento> getListaProcedimento() {
+    public HashSet<Procedimento> getListaProcedimento() {
         return listaProcedimento;
     }
         
