@@ -18,10 +18,6 @@ public class AnimalRNVal implements ValidacaoRN<Animal>{
         if (bean.getNome() == null) {
             throw new RuntimeException("Campo Nome não informado");
         }
-
-        if (bean.getDono() == null || bean.getDono().getCodigo() == null) {
-            throw new RuntimeException("Campo Dono não informado");
-        }
     }
 
     @Override
