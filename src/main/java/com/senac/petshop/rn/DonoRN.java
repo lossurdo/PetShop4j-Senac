@@ -1,33 +1,51 @@
 package com.senac.petshop.rn;
 
+import com.senac.petshop.bd.DonoBD;
 import com.senac.petshop.bean.Dono;
+import com.senac.petshop.infra.CrudBD;
+import com.senac.petshop.rnval.DonoRNVal;
+import java.util.Set;
 
 /**
  *
  * @author lossurdo
  */
-public class DonoRN {
+public class DonoRN extends CrudBD<Dono>{
+    private final DonoBD donoBD;
+    private final DonoRNVal donoRNVal;
 
-    public boolean validaIncluir(Dono dono) {
-        boolean registroOK = true;
+    public DonoRN() {
+        donoBD = new DonoBD();
+        donoRNVal = new DonoRNVal();
+    }
 
-        if (dono.getCodigo() == null) {
-            registroOK = false;
-        }
-        
-        if (dono.getCpf() == null) {
-            registroOK = false;
-        }
-        
-        if (dono.getNome() == null) {
-            registroOK = false;
-        }
-        
-        if (dono.getTelefoneCelular() == null) {
-            registroOK = false;
-        }
-        
-        return registroOK;
+    @Override
+    public void salvar(Dono bean) {
+        donoRNVal.validarSalvar(bean);
+        donoBD.salvar(bean);
+    }
+
+    @Override
+    public void excluir(Dono bean) {
+        donoRNVal.validarExcluir(bean);
+        donoBD.excluir(bean);
+    }
+
+    @Override
+    public Dono consultar(Dono bean) {
+        donoRNVal.validarConsultar(bean);
+        return donoBD.consultar(bean);                
+    }
+
+    @Override
+    public void alterar(Dono bean) {
+        donoRNVal.validarAlterar(bean);
+        donoBD.alterar(bean);
+    }
+
+    @Override
+    public Set<Dono> pesquisar(Dono bean) {
+        return donoBD.pesquisar(bean);
     }
 
 }
