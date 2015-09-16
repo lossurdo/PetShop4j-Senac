@@ -5,6 +5,7 @@ import com.senac.petshop.bean.CorPredominante;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.bean.TipoAnimal;
 import com.senac.petshop.infra.BancoDados;
+import com.senac.petshop.infra.Propriedades;
 import com.senac.petshop.rn.AnimalRN;
 import com.senac.petshop.rn.DonoRN;
 import com.senac.petshop.util.CadastradorAutomatico;
@@ -13,6 +14,7 @@ import com.senac.petshop.util.MenuConsole;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -20,15 +22,19 @@ import java.util.HashMap;
  */
 public class App {
 
+    private static final Logger logger = Logger.getLogger(App.class);
+    
     public static void main(String[] args) throws Exception {
         // geração de dados automáticos
         CadastradorAutomatico.popular();
 
         // enquanto não optado por "sair"
         while (true) {
-            MenuConsole mc = new MenuConsole("PetShop4j Senac",
-                    "Controle de Pet Shop (Desktop)",
-                    App.class);
+            MenuConsole mc = new MenuConsole(
+                    Propriedades.getInstance().get("sistema.nome"),
+                    Propriedades.getInstance().get("sistema.descricao"),
+                    App.class); // exemplo de uso de Propriedades
+            
             mc.adicionarAcao("Cadastrar Dono", "cadastrarDono");
             mc.adicionarAcao("Cadastrar Animal", "cadastrarAnimal");
             mc.adicionarAcao("Listar Animais vs. Donos", "listarTudo");
@@ -46,7 +52,7 @@ public class App {
     public void listarTudo() {
         Console.cabecalho("Listando Animais vs. Donos");
         for (Dono dono : BancoDados.getInstance().getListaDono()) {
-            Console.mensagem(dono);
+            logger.debug(dono);
         }
     }
 
@@ -86,9 +92,9 @@ public class App {
         DonoRN rn = new DonoRN();
         try {
             rn.salvar(dono);
-            Console.mensagem("Dono cadastrado com sucesso!");
+            logger.debug("Dono cadastrado com sucesso!");
         } catch (Exception e) {
-            Console.mensagem("Problema no cadastramento: " + e.getMessage());
+            logger.error("Problema no cadastramento", e);
         }
     }
 
@@ -144,9 +150,9 @@ public class App {
             AnimalRN rn = new AnimalRN();
             try {
                 rn.salvar(a);
-                Console.mensagem("Animal cadastrado e vinculado ao seu Dono com sucesso!");
+                logger.debug("Animal cadastrado e vinculado ao seu Dono com sucesso!");
             } catch (Exception e) {
-                Console.mensagem("Problema no cadastramento: " + e.getMessage());
+                logger.error("Problema no cadastramento", e);
             }
         } while (!cadastroOK);
     }

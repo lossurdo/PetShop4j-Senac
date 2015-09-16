@@ -11,6 +11,9 @@ import java.util.HashSet;
  * em banco de dados. Posteriormente será
  * utilizada a conexão JDBC.
  * 
+ * Exemplo do Design Pattern: Singleton
+ * https://sourcemaking.com/design_patterns/singleton
+ * 
  * @author lossurdo
  */
 public class BancoDados {
