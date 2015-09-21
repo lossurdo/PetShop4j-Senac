@@ -11,9 +11,15 @@ import com.senac.petshop.rn.DonoRN;
 import com.senac.petshop.util.CadastradorAutomatico;
 import com.senac.petshop.util.Console;
 import com.senac.petshop.util.MenuConsole;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -27,6 +33,12 @@ public class App {
     public static void main(String[] args) throws Exception {
         // geração de dados automáticos
         CadastradorAutomatico.popular();
+        
+        // informação de versão do java que está rodando
+        logger.debug("Versão de Java: " + SystemUtils.JAVA_VERSION_FLOAT);
+        logger.debug("Java: " + SystemUtils.JAVA_VM_VENDOR);
+        logger.debug("Java instalado em: " + SystemUtils.JAVA_HOME);
+        logger.debug("Sistema operacional: " + SystemUtils.OS_NAME);
 
         // enquanto não optado por "sair"
         while (true) {
@@ -38,6 +50,7 @@ public class App {
             mc.adicionarAcao("Cadastrar Dono", "cadastrarDono");
             mc.adicionarAcao("Cadastrar Animal", "cadastrarAnimal");
             mc.adicionarAcao("Listar Animais vs. Donos", "listarTudo");
+            mc.adicionarAcao("Sobre", "sobre");
             mc.adicionarAcao("Sair", "sair");
 
             System.out.println(mc.getTexto());
@@ -49,6 +62,11 @@ public class App {
 
     }
 
+    public void sobre() throws IOException {
+        String txtSobre = FileUtils.readFileToString(new File("sobre.txt"));
+        JOptionPane.showMessageDialog(null, txtSobre);
+    }
+    
     public void listarTudo() {
         Console.cabecalho("Listando Animais vs. Donos");
         for (Dono dono : BancoDados.getInstance().getListaDono()) {
@@ -72,6 +90,10 @@ public class App {
         do {
             codigo = Console.lerInteger("Código");
             nome = Console.lerString("Nome");
+
+            // formatando nome do animal
+            nome = StringUtils.capitalize(nome);
+
             cpf = Console.lerString("CPF");
             telefoneResidencial = Console.lerString("Tel. Residencial");
             telefoneCelular = Console.lerString("Tel. Celular");
@@ -116,6 +138,10 @@ public class App {
         do {
             codigo = Console.lerInteger("Código");
             nome = Console.lerString("Nome");
+            
+            // formatando nome do animal
+            nome = StringUtils.capitalize(nome);
+            
             String dataNascimentoTexto = Console.lerString("Data de Nascimento (ex. 31/12/2015)");
             dataNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(dataNascimentoTexto);
 
