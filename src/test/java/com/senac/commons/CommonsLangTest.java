@@ -65,8 +65,11 @@ public class CommonsLangTest {
     
     @Test
     public void testSystemUtils() {
-        // onde fica o java instalado?
-        System.out.println(SystemUtils.getJavaHome().toString());
+        // informações sobre o Java da máquina
+        System.out.println("Versão de Java: " + SystemUtils.JAVA_VERSION_FLOAT);
+        System.out.println("Java: " + SystemUtils.JAVA_VM_VENDOR);
+        System.out.println("Java instalado em: " + SystemUtils.JAVA_HOME);
+        System.out.println("Sistema operacional: " + SystemUtils.OS_NAME);        
     }
     
     @Test
