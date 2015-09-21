@@ -9,7 +9,7 @@ import java.util.Objects;
  *
  * @author lossurdo
  */
-public class Dono {
+public class Dono implements Comparable<Dono> {
 
     private Integer codigo;
     private String nome;
@@ -119,6 +119,11 @@ public class Dono {
     @Override
     public String toString() {
         return "Dono{" + "codigo=" + codigo + ", nome=" + nome + ", cpf=" + cpf + ", telefoneResidencial=" + telefoneResidencial + ", telefoneCelular=" + telefoneCelular + ", email=" + email + ", dataNascimento=" + dataNascimento + ", animais=" + animais + '}';
+    }
+
+    @Override
+    public int compareTo(Dono o) {
+        return o.getCodigo().compareTo(codigo);
     }
     
 }
