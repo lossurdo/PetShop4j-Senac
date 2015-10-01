@@ -3,6 +3,7 @@ package com.senac.petshop.bd;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.infra.BancoDados;
 import com.senac.petshop.infra.CrudBD;
+import java.sql.Connection;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -14,7 +15,18 @@ public class DonoBD extends CrudBD<Dono> {
 
     @Override
     public void salvar(Dono bean) {
-        BancoDados.getInstance().getListaDono().add(bean);
+        Connection conn = null;
+        try {
+            // pegaria a conexão para gravar em banco
+            conn = abrirConexao();
+            
+            // salvaria em banco
+            BancoDados.getInstance().getListaDono().add(bean);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            fecharConexao(conn);
+        }
     }
 
     @Override
