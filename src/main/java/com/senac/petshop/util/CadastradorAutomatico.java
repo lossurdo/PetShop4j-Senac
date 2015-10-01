@@ -4,7 +4,8 @@ import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.CorPredominante;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.bean.TipoAnimal;
-import com.senac.petshop.infra.BancoDados;
+import com.senac.petshop.rn.AnimalRN;
+import com.senac.petshop.rn.DonoRN;
 import java.util.Date;
 import org.apache.log4j.Logger;
 
@@ -51,12 +52,14 @@ public class CadastradorAutomatico {
         d2.getAnimais().add(a2);
         
         // cadastro de donos
-        BancoDados.getInstance().getListaDono().add(d1);
-        BancoDados.getInstance().getListaDono().add(d2);
+        DonoRN donoRN = new DonoRN();
+        donoRN.salvar(d1);
+        donoRN.salvar(d2);
         
         // cadastro de animais
-        BancoDados.getInstance().getListaAnimal().add(a1);
-        BancoDados.getInstance().getListaAnimal().add(a2);
+        AnimalRN animalRN = new AnimalRN();
+        animalRN.salvar(a1);
+        animalRN.salvar(a2);
 
         logger.debug("Dados populados com sucesso!");
     }
