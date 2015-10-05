@@ -8,6 +8,6 @@ interface Crud<T> {
     void excluir(T bean);
     T consultar(T bean);
     void alterar(T bean);
-    Set<T> pesquisar(T bean);
+    Set<T> pesquisar(String pesquisa);
     
 }
