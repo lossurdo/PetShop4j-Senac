@@ -34,7 +34,7 @@ public class DonoRN extends CrudBD<Dono>{
     @Override
     public Dono consultar(Dono bean) {
         donoRNVal.validarConsultar(bean);
-        return donoBD.consultar(bean);                
+        return donoBD.consultar(bean);
     }
 
     @Override
