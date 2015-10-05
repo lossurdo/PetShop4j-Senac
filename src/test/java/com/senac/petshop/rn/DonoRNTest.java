@@ -47,7 +47,7 @@ public class DonoRNTest {
     public void test_C_Pesquisar() {
         System.out.println("pesquisar");
         DonoRN rn = new DonoRN();
-        Set<Dono> resultado = rn.pesquisar(new Dono(99999));
+        Set<Dono> resultado = rn.pesquisar("maria");
         Assert.assertTrue(resultado.size()>0);
     }
     
