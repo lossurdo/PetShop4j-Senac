@@ -15,24 +15,27 @@ import org.junit.runners.MethodSorters;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DonoRNTest {
-    
+
     private Dono dono = null;
-    
+
     @Before
     public void init() {
-        dono = new Dono(99999);
+        dono = new Dono();
         dono.setCpf("9999888855");
         dono.setNome("Anna Faris");
         dono.setDataNascimento(new Date());
         dono.setEmail("anna.f@gmail.com");
-        dono.setTelefoneCelular("5559999");    
+        dono.setTelefoneCelular("5559999");
     }
-    
+
     @Test
     public void test_A_Salvar() {
         System.out.println("salvar");
         DonoRN rn = new DonoRN();
         rn.salvar(dono);
+
+        dono = (Dono) rn.pesquisar("Anna Faris").toArray()[0];
+
         Assert.assertNotNull(rn.consultar(dono));
     }
 
@@ -40,15 +43,26 @@ public class DonoRNTest {
     public void test_B_Consultar() {
         System.out.println("consultar");
         DonoRN rn = new DonoRN();
-        Assert.assertNull(rn.consultar(new Dono(22222)));
+        Dono donoConsultar = (Dono) rn.pesquisar("Anna Faris").toArray()[0];
+        Assert.assertNotNull(rn.consultar(donoConsultar));
     }
 
     @Test
     public void test_C_Pesquisar() {
         System.out.println("pesquisar");
         DonoRN rn = new DonoRN();
-        Set<Dono> resultado = rn.pesquisar("maria");
-        Assert.assertTrue(resultado.size()>0);
+        Set<Dono> resultado = rn.pesquisar("Anna Faris");
+        Assert.assertTrue(resultado.size() > 0);
     }
-    
+
+    @Test
+    public void test_D_Excluir() {
+        System.out.println("excluir");
+        DonoRN rn = new DonoRN();
+        Set<Dono> resultado = rn.pesquisar("Anna Faris");
+        Assert.assertTrue(resultado.size() > 0);
+        Dono donoExcluir = (Dono) rn.pesquisar("Anna Faris").toArray()[0];
+        rn.excluir(donoExcluir);
+    }
+
 }
