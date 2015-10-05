@@ -14,6 +14,13 @@ import org.apache.log4j.Logger;
  * em sala de aula, contendo alguns registros
  * previamente cadastrados.
  * 
+ * CARO ALUNO,
+ * 
+ * ESTA CLASSE NÃO SERÁ MAIS UTILIZADA DEPOIS DA
+ * CONFIGURAÇÃO DO PROJETO PARA ACESSO AO BANCO
+ * DE DADOS MYSQL. ESTA CLASSE SERÁ MANTIDA NO
+ * PROJETO PARA FINS DIDÁTICOS.
+ * 
  * @author lossurdo
  */
 public class CadastradorAutomatico {
