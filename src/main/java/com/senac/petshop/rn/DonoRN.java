@@ -44,8 +44,8 @@ public class DonoRN extends CrudBD<Dono>{
     }
 
     @Override
-    public Set<Dono> pesquisar(Dono bean) {
-        return donoBD.pesquisar(bean);
+    public Set<Dono> pesquisar(String pesquisa) {
+        return donoBD.pesquisar(pesquisa);
     }
 
 }
