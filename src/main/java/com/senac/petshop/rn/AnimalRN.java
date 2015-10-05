@@ -1,9 +1,9 @@
 package com.senac.petshop.rn;
 
-import com.senac.petshop.rnval.AnimalRNVal;
 import com.senac.petshop.bd.AnimalBD;
-import com.senac.petshop.infra.CrudBD;
 import com.senac.petshop.bean.Animal;
+import com.senac.petshop.infra.CrudBD;
+import com.senac.petshop.rnval.AnimalRNVal;
 import java.util.Set;
 
 /**
@@ -45,8 +45,8 @@ public class AnimalRN extends CrudBD<Animal> {
     }
 
     @Override
-    public Set<Animal> pesquisar(Animal bean) {
-        return animalBD.pesquisar(bean);
+    public Set<Animal> pesquisar(String pesquisa) {
+        return animalBD.pesquisar(pesquisa);
     }
 
 }
