@@ -1,6 +1,6 @@
 package com.senac.petshop.infra;
 
-import java.util.Set;
+import java.util.List;
 
 interface Crud<T> {
 
@@ -8,6 +8,6 @@ interface Crud<T> {
     void excluir(T bean);
     T consultar(T bean);
     void alterar(T bean);
-    Set<T> pesquisar(String pesquisa);
+    List<T> pesquisar(String pesquisa);
     
 }
