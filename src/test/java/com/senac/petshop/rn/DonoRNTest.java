@@ -2,9 +2,9 @@ package com.senac.petshop.rn;
 
 import com.senac.petshop.bean.Dono;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -16,10 +16,10 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DonoRNTest {
 
-    private Dono dono = null;
+    private static Dono dono = null;
 
-    @Before
-    public void init() {
+    @BeforeClass
+    public static void init() {
         dono = new Dono();
         dono.setCpf("9999888855");
         dono.setNome("Anna Faris");
@@ -51,7 +51,7 @@ public class DonoRNTest {
     public void test_C_Pesquisar() {
         System.out.println("pesquisar");
         DonoRN rn = new DonoRN();
-        Set<Dono> resultado = rn.pesquisar("Anna Faris");
+        List<Dono> resultado = rn.pesquisar("Anna Faris");
         Assert.assertTrue(resultado.size() > 0);
     }
 
@@ -59,7 +59,7 @@ public class DonoRNTest {
     public void test_D_Excluir() {
         System.out.println("excluir");
         DonoRN rn = new DonoRN();
-        Set<Dono> resultado = rn.pesquisar("Anna Faris");
+        List<Dono> resultado = rn.pesquisar("Anna Faris");
         Assert.assertTrue(resultado.size() > 0);
         Dono donoExcluir = (Dono) rn.pesquisar("Anna Faris").toArray()[0];
         rn.excluir(donoExcluir);
