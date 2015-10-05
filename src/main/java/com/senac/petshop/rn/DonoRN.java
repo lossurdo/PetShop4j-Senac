@@ -1,6 +1,7 @@
 package com.senac.petshop.rn;
 
 import com.senac.petshop.bd.DonoBD;
+import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.infra.CrudBD;
 import com.senac.petshop.rnval.DonoRNVal;
@@ -46,6 +47,10 @@ public class DonoRN extends CrudBD<Dono>{
     @Override
     public Set<Dono> pesquisar(String pesquisa) {
         return donoBD.pesquisar(pesquisa);
+    }
+
+    public Dono consultaDonoPorAnimal(Animal animal) {
+        return donoBD.consultaDonoPorAnimal(animal);
     }
 
 }
