@@ -7,9 +7,9 @@ import com.senac.petshop.rn.AnimalRN;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
 /**
  *
@@ -143,8 +143,8 @@ public class DonoBD extends CrudBD<Dono> {
     }
 
     @Override
-    public Set<Dono> pesquisar(String pesquisa) {
-        Set<Dono> lista = new TreeSet<>();
+    public List<Dono> pesquisar(String pesquisa) {
+        List<Dono> lista = new ArrayList<>();
 
         // definição do SQL com base nos dados informados para pesquisa
         StringBuilder sql = new StringBuilder();
