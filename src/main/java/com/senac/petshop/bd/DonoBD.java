@@ -1,5 +1,6 @@
 package com.senac.petshop.bd;
 
+import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.infra.CrudBD;
 import com.senac.petshop.rn.AnimalRN;
@@ -191,6 +192,49 @@ public class DonoBD extends CrudBD<Dono> {
         }
 
         return lista;
+    }
+
+    public Dono consultaDonoPorAnimal(Animal bean) {
+        Dono donoRetorno = null;
+
+        Connection conn = null;
+        try {
+            conn = abrirConexao();
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT d.* ");
+            sql.append("from dono d ");
+            sql.append("inner join animal a on a.dono_codigo=d.codigo ");
+            sql.append("where a.codigo=? ");            
+            
+            PreparedStatement pstm = conn.prepareStatement(sql.toString());
+            pstm.setInt(1, bean.getCodigo());
+
+            logger.debug("Consultando: " + bean);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                logger.debug("Registro encontrado");
+                donoRetorno = new Dono();
+                donoRetorno.setCodigo(rs.getInt("codigo"));
+                donoRetorno.setNome(rs.getString("nome"));
+                donoRetorno.setCpf(rs.getString("cpf"));
+                donoRetorno.setEmail(rs.getString("email"));
+                donoRetorno.setTelefoneCelular(rs.getString("tel_celular"));
+                donoRetorno.setTelefoneResidencial(rs.getString("tel_residencial"));
+                donoRetorno.setDataNascimento(new Date(rs.getDate("data_nascimento").getTime()));
+                
+                // consulta animais de um dono
+                AnimalRN rn = new AnimalRN();
+                donoRetorno.setAnimais(rn.consultarPorDono(donoRetorno));
+            }
+            logger.debug("Consulta executada com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            fecharConexao(conn);
+        }
+
+        return donoRetorno;
     }
 
 }
