@@ -2,6 +2,7 @@ package com.senac.petshop.bd;
 
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.infra.CrudBD;
+import com.senac.petshop.rn.AnimalRN;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,6 +92,10 @@ public class DonoBD extends CrudBD<Dono> {
                 donoRetorno.setTelefoneCelular(rs.getString("tel_celular"));
                 donoRetorno.setTelefoneResidencial(rs.getString("tel_residencial"));
                 donoRetorno.setDataNascimento(new Date(rs.getDate("data_nascimento").getTime()));
+                
+                // consulta animais de um dono
+                AnimalRN rn = new AnimalRN();
+                donoRetorno.setAnimais(rn.consultarPorDono(donoRetorno));
             }
             logger.debug("Consulta executada com sucesso");
         } catch (Exception e) {
@@ -172,6 +177,10 @@ public class DonoBD extends CrudBD<Dono> {
                 dono.setTelefoneResidencial(rs.getString("tel_residencial"));
                 dono.setDataNascimento(new Date(rs.getDate("data_nascimento").getTime()));
                 
+                // consulta animais de um dono
+                AnimalRN rn = new AnimalRN();
+                dono.setAnimais(rn.consultarPorDono(dono));
+
                 lista.add(dono);
             }
             logger.debug("Pesquisa executada com sucesso");
