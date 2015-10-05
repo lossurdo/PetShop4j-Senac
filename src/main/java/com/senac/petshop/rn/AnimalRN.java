@@ -2,8 +2,10 @@ package com.senac.petshop.rn;
 
 import com.senac.petshop.bd.AnimalBD;
 import com.senac.petshop.bean.Animal;
+import com.senac.petshop.bean.Dono;
 import com.senac.petshop.infra.CrudBD;
 import com.senac.petshop.rnval.AnimalRNVal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,4 +51,7 @@ public class AnimalRN extends CrudBD<Animal> {
         return animalBD.pesquisar(pesquisa);
     }
 
+    public List<Animal> consultarPorDono(Dono bean) {
+        return animalBD.consultarPorDono(bean);
+    }
 }
