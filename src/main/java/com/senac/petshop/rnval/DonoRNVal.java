@@ -12,10 +12,6 @@ public class DonoRNVal implements ValidacaoRN<Dono> {
 
     @Override
     public void validarSalvar(Dono bean) {
-        if (bean.getCodigo() == null) {
-            throw new ValidacaoRNException("Campo Código não informado");
-        }
-        
         if (bean.getCpf() == null) {
             throw new ValidacaoRNException("Campo CPF não informado");
         }
