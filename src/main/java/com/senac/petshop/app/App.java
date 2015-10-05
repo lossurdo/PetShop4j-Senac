@@ -4,11 +4,9 @@ import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.CorPredominante;
 import com.senac.petshop.bean.Dono;
 import com.senac.petshop.bean.TipoAnimal;
-import com.senac.petshop.infra.BancoDados;
 import com.senac.petshop.infra.Propriedades;
 import com.senac.petshop.rn.AnimalRN;
 import com.senac.petshop.rn.DonoRN;
-import com.senac.petshop.util.CadastradorAutomatico;
 import com.senac.petshop.util.Console;
 import com.senac.petshop.util.MenuConsole;
 import java.io.File;
@@ -31,15 +29,12 @@ public class App {
     private static final Logger logger = Logger.getLogger(App.class);
     
     public static void main(String[] args) throws Exception {
-        // geração de dados automáticos
-        CadastradorAutomatico.popular();
-        
         // informação de versão do java que está rodando
         logger.debug("Versão de Java: " + SystemUtils.JAVA_VERSION_FLOAT);
         logger.debug("Java: " + SystemUtils.JAVA_VM_VENDOR);
         logger.debug("Java instalado em: " + SystemUtils.JAVA_HOME);
         logger.debug("Sistema operacional: " + SystemUtils.OS_NAME);
-
+        
         // enquanto não optado por "sair"
         while (true) {
             MenuConsole mc = new MenuConsole(
@@ -69,7 +64,8 @@ public class App {
     
     public void listarTudo() {
         Console.cabecalho("Listando Animais vs. Donos");
-        for (Dono dono : BancoDados.getInstance().getListaDono()) {
+        DonoRN rn = new DonoRN();
+        for (Dono dono : rn.pesquisar("")) {
             logger.debug(dono);
         }
     }
@@ -154,7 +150,8 @@ public class App {
             Console.mensagem("Listagem de Donos");
             HashMap<Integer, Dono> hm = new HashMap<>();
             int o = 1;
-            for (Dono d : BancoDados.getInstance().getListaDono()) {
+            DonoRN donoRN = new DonoRN();
+            for (Dono d : donoRN.pesquisar("")) {
                 Console.mensagem(o + "-" + d.getNome());
                 hm.put(o, d);
                 o++;
@@ -170,8 +167,8 @@ public class App {
             a.setCorPredominante(corPredominante);
             a.setTipoAnimal(tipoAnimal);
 
-            // vinculando animal ao dono
-            dono.getAnimais().add(a);
+            // vinculando dono ao animal
+            a.setDono(dono);
 
             AnimalRN rn = new AnimalRN();
             try {
