@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * ESTA CLASSE NÃO CADASTRA DIRETAMENTE EM BANCO
+ * DE DADOS, APENAS SIMULA O CADASTRAMENTO EM MEMÓRIA.
+ * 
  * @author lossurdo
  */
 public class CadastradorAutomaticoTest {
