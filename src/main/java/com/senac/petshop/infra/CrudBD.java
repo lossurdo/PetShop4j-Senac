@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class CrudBD<T> implements Crud<T> {
 
-    private static final Logger logger = Logger.getLogger(CrudBD.class);
+    protected static final Logger logger = Logger.getLogger(CrudBD.class);
 
     protected final String BD_STRING_CONEXAO = Propriedades.getInstance().get("db.string");
     protected final String BD_USERNAME = Propriedades.getInstance().get("db.user");
@@ -32,7 +32,15 @@ public abstract class CrudBD<T> implements Crud<T> {
     public Connection abrirConexao() {
         try {
             logger.debug("Abrindo a conexão com o banco de dados");
-            return DriverManager.getConnection(BD_STRING_CONEXAO, BD_USERNAME, BD_PASSWORD);
+            final Connection conexao = DriverManager.getConnection(BD_STRING_CONEXAO, BD_USERNAME, BD_PASSWORD);
+
+            /*
+             Desliga o commit automático, deixando este controle 
+             para o desenvolvedor...
+             */
+            conexao.setAutoCommit(false);
+
+            return conexao;
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
@@ -44,9 +52,32 @@ public abstract class CrudBD<T> implements Crud<T> {
         try {
             if (connection != null) {
                 connection.close();
+                logger.debug("Conexão com o banco de dados encerrada com sucesso");
             }
         } catch (Exception e) {
             logger.error("Problema ao fechar conexão com banco de dados", e);
+        }
+    }
+
+    protected void commitTransacao(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.commit();
+                logger.debug("COMMIT da transação efetuado");
+            } catch (SQLException ex) {
+                logger.error("Problema ao efetuar COMMIT no banco de dados", ex);
+            }
+        }
+    }
+
+    protected void rollbackTransacao(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.rollback();
+                logger.debug("ROLLBACK da transação efetuado");
+            } catch (SQLException ex) {
+                logger.error("Problema ao efetuar ROLLBACK no banco de dados", ex);
+            }
         }
     }
 }
