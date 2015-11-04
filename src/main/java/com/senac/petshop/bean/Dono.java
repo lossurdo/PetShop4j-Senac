@@ -1,5 +1,7 @@
 package com.senac.petshop.bean;
 
+import com.jdf.swing.helper.jtable.ColumnMetadataFormat;
+import com.jdf.swing.helper.jtable.JTableColumnMetadata;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,12 +13,25 @@ import java.util.Objects;
  */
 public class Dono implements Comparable<Dono> {
 
+    @JTableColumnMetadata(name = "Código")
     private Integer codigo;
+    
+    @JTableColumnMetadata(name = "Nome")
     private String nome;
+
+    @JTableColumnMetadata(name = "CPF")
     private String cpf;
+
+    @JTableColumnMetadata(name = "Tel.Resid.")
     private String telefoneResidencial;
+
+    @JTableColumnMetadata(name = "Celular")
     private String telefoneCelular;
+
+    @JTableColumnMetadata(name = "Email")
     private String email;
+
+    @JTableColumnMetadata(name = "Email", format = ColumnMetadataFormat.DATE_DD_MM_YYYY)
     private Date dataNascimento;
     
     private List<Animal> animais;

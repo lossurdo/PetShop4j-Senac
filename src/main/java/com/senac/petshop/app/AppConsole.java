@@ -24,9 +24,9 @@ import org.apache.log4j.Logger;
  *
  * @author lossurdo
  */
-public class App {
+public class AppConsole {
 
-    private static final Logger logger = Logger.getLogger(App.class);
+    private static final Logger logger = Logger.getLogger(AppConsole.class);
     
     public static void main(String[] args) throws Exception {
         // informação de versão do java que está rodando
@@ -40,7 +40,7 @@ public class App {
             MenuConsole mc = new MenuConsole(
                     Propriedades.getInstance().get("sistema.nome"),
                     Propriedades.getInstance().get("sistema.descricao"),
-                    App.class); // exemplo de uso de Propriedades
+                    AppConsole.class); // exemplo de uso de Propriedades
             
             mc.adicionarAcao("Cadastrar Dono", "cadastrarDono");
             mc.adicionarAcao("Cadastrar Animal", "cadastrarAnimal");
