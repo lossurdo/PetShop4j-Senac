@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class ManutencaoDono extends javax.swing.JInternalFrame {
 
     private JTableHelper<Dono> tableHelper;
-    
+
     public ManutencaoDono() {
         initComponents();
 
@@ -88,8 +88,18 @@ public class ManutencaoDono extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tblDono);
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnPesquisar.setText("Pesquisar");
         btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,19 +207,67 @@ public class ManutencaoDono extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void tblDonoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDonoMouseClicked
-        
+
         txtCodigo.setText(tableHelper.getSelectedObject().getCodigo().toString());
         txtNome.setText(tableHelper.getSelectedObject().getNome());
         txtCPF.setText(tableHelper.getSelectedObject().getCpf());
         txtEmail.setText(tableHelper.getSelectedObject().getEmail());
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         txtDataNascimento.setText(sdf.format(tableHelper.getSelectedObject().getDataNascimento()));
-        
+
         txtTelCelular.setText(tableHelper.getSelectedObject().getTelefoneCelular());
         txtTelResidencial.setText(tableHelper.getSelectedObject().getTelefoneResidencial());
-        
+
     }//GEN-LAST:event_tblDonoMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+        if (txtCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Código deve ser informado");
+        } else {
+            if (JOptionPane.showConfirmDialog(this, 
+                    "Deseja mesmo excluir este registro?") == JOptionPane.OK_OPTION) {
+                try {
+                    DonoRN rn = new DonoRN();
+                    rn.excluir(new Dono(Integer.parseInt(txtCodigo.getText())));
+                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+                
+        try {
+            Dono dono = new Dono();
+            dono.setNome(txtNome.getText());
+            dono.setCpf(txtCPF.getText());
+            dono.setEmail(txtEmail.getText());
+            dono.setTelefoneCelular(txtTelCelular.getText());
+            dono.setTelefoneResidencial(txtTelResidencial.getText());
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            dono.setDataNascimento(sdf.parse(txtDataNascimento.getText()));
+            
+            DonoRN rn = new DonoRN();
+
+            if(txtCodigo.getText().isEmpty()) {
+                rn.salvar(dono);
+                JOptionPane.showMessageDialog(this, "Registro incluído com sucesso!");
+            } else {
+                dono.setCodigo(Integer.parseInt(txtCodigo.getText()));
+                rn.alterar(dono);
+                JOptionPane.showMessageDialog(this, "Registro alterado com sucesso!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
