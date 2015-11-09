@@ -6,34 +6,44 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation respons·vel pela marcaÁ„o de metadados
- * para exibiÁ„o em componentes JTable
+ * Annotation respons√°vel pela marca√ß√£o de metadados para exibi√ß√£o em
+ * componentes JTable e JComboBox
+ *
  * @author lossurdo
  * @since 22/03/2009
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface JTableColumnMetadata {
+
     /**
-     * Nome do cabeÁalho da coluna
+     * Nome do cabe√ßalho da coluna
+     *
      * @return
      */
     public String name();
+
     /**
      * Tamanho em pixels para a coluna
+     *
      * @return
      */
     public int size() default 0;
-    
+
     /**
-     * Formato em que os dados ser„o exibidos
+     * Formato em que os dados ser√£o exibidos
+     *
      * @return
      */
-	public ColumnMetadataFormat format() default ColumnMetadataFormat.DEFAULT;
-	
-	/**
-	 * Alinhamento em que os dados ser„o exibidos
-	 * @return
-	 */
-	public ColumnMetadataAlign align() default ColumnMetadataAlign.LEFT;
+    public ColumnMetadataFormat format() default ColumnMetadataFormat.DEFAULT;
+
+    /**
+     * Alinhamento em que os dados ser√£o exibidos
+     *
+     * @return
+     */
+    public ColumnMetadataAlign align() default ColumnMetadataAlign.LEFT;
+    
+    public boolean isKey() default false;
+    public boolean isValue() default false;
 }

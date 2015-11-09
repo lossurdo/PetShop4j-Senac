@@ -1,5 +1,6 @@
 package com.senac.petshop.bean;
 
+import com.jdf.swing.helper.jtable.JTableColumnMetadata;
 import java.util.Date;
 import java.util.Objects;
 
@@ -9,12 +10,20 @@ import java.util.Objects;
  */
 public class Animal {
 
+    @JTableColumnMetadata(name = "Código", isKey = true)
     private Integer codigo;
+
+    @JTableColumnMetadata(name = "Nome", isValue = true)
     private String nome;
+    
     private Date dataNascimento;
     
+    @JTableColumnMetadata(name = "Tipo")
     private TipoAnimal tipoAnimal; // gato, cachorro
+    
     private String descricao; // raça, porte, doenças etc
+    
+    @JTableColumnMetadata(name = "Cor")
     private CorPredominante corPredominante;
     
     private Dono dono; // pessoa dona do animal

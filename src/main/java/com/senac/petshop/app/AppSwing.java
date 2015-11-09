@@ -1,5 +1,6 @@
 package com.senac.petshop.app;
 
+import com.senac.petshop.swing.ManutencaoAnimal;
 import com.senac.petshop.swing.ManutencaoDono;
 
 /**
@@ -47,6 +48,7 @@ public class AppSwing extends javax.swing.JFrame {
         menuAtendimento.add(menuItemManutencao);
         menuAtendimento.add(jSeparator1);
 
+        menuItemSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
         menuItemSair.setText("Sair");
         menuItemSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,6 +74,11 @@ public class AppSwing extends javax.swing.JFrame {
         menuAnimal.setText("Animal");
 
         menuItemManutAnimal.setText("Manutenção");
+        menuItemManutAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemManutAnimalActionPerformed(evt);
+            }
+        });
         menuAnimal.add(menuItemManutAnimal);
 
         menubar.add(menuAnimal);
@@ -109,6 +116,14 @@ public class AppSwing extends javax.swing.JFrame {
         System.exit(0);
         
     }//GEN-LAST:event_menuItemSairActionPerformed
+
+    private void menuItemManutAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemManutAnimalActionPerformed
+        
+        ManutencaoAnimal ma = new ManutencaoAnimal();
+        desktopPane.add(ma);
+        ma.setVisible(true);
+        
+    }//GEN-LAST:event_menuItemManutAnimalActionPerformed
 
     /**
      * @param args the command line arguments

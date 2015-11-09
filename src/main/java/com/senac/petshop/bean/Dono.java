@@ -13,10 +13,10 @@ import java.util.Objects;
  */
 public class Dono implements Comparable<Dono> {
 
-    @JTableColumnMetadata(name = "Código")
+    @JTableColumnMetadata(name = "Código", isKey = true)
     private Integer codigo;
     
-    @JTableColumnMetadata(name = "Nome")
+    @JTableColumnMetadata(name = "Nome", isValue = true)
     private String nome;
 
     @JTableColumnMetadata(name = "CPF")
