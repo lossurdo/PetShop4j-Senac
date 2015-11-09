@@ -43,7 +43,4 @@ public @interface JTableColumnMetadata {
      * @return
      */
     public ColumnMetadataAlign align() default ColumnMetadataAlign.LEFT;
-    
-    public boolean isKey() default false;
-    public boolean isValue() default false;
 }

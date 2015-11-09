@@ -13,10 +13,10 @@ import java.util.Objects;
  */
 public class Dono implements Comparable<Dono> {
 
-    @JTableColumnMetadata(name = "Código", isKey = true)
+    @JTableColumnMetadata(name = "Código")
     private Integer codigo;
     
-    @JTableColumnMetadata(name = "Nome", isValue = true)
+    @JTableColumnMetadata(name = "Nome")
     private String nome;
 
     @JTableColumnMetadata(name = "CPF")
@@ -133,7 +133,7 @@ public class Dono implements Comparable<Dono> {
 
     @Override
     public String toString() {
-        return "Dono{" + "codigo=" + codigo + ", nome=" + nome + ", cpf=" + cpf + ", telefoneResidencial=" + telefoneResidencial + ", telefoneCelular=" + telefoneCelular + ", email=" + email + ", dataNascimento=" + dataNascimento + ", animais=" + animais + '}';
+        return getNome(); // para uso no combobox
     }
 
     @Override

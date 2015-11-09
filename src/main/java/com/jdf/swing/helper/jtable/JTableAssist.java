@@ -83,13 +83,4 @@ public class JTableAssist {
         }
     }
 
-    public static boolean isKey(Field f) {
-        JTableColumnMetadata an = f.getAnnotation(JTableColumnMetadata.class);
-        return an.isKey();
-    }
-
-    public static boolean isValue(Field f) {
-        JTableColumnMetadata an = f.getAnnotation(JTableColumnMetadata.class);
-        return an.isValue();
-    }
 }

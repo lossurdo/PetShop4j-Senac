@@ -61,6 +61,7 @@ public class AppSwing extends javax.swing.JFrame {
 
         menuDono.setText("Dono");
 
+        menuItemManutDono.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
         menuItemManutDono.setText("Manutenção");
         menuItemManutDono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,6 +74,7 @@ public class AppSwing extends javax.swing.JFrame {
 
         menuAnimal.setText("Animal");
 
+        menuItemManutAnimal.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         menuItemManutAnimal.setText("Manutenção");
         menuItemManutAnimal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

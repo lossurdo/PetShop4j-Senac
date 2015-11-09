@@ -18,24 +18,25 @@ import javax.swing.JOptionPane;
  * @author lossurdo
  */
 public class ManutencaoAnimal extends javax.swing.JInternalFrame {
+
     private final JTableHelper<Animal> tableHelper;
 
     public ManutencaoAnimal() {
-        initComponents();        
-    
-        tableHelper = new JTableHelper<>(tblAnimal);        
-        
+        initComponents();
+
+        tableHelper = new JTableHelper<>(tblAnimal);
+
         atualizarCombo();
     }
 
     private void atualizarCombo() {
-        JComboBoxHelper<Dono> chDono = new JComboBoxHelper<>(comboDono);
+        JComboBoxHelper chDono = new JComboBoxHelper(comboDono);
         chDono.setModel(new DonoRN().pesquisar(""));
-        
-        JComboBoxHelper<TipoAnimal> chTipo = new JComboBoxHelper<>(comboTipoAnimal);
+
+        JComboBoxHelper chTipo = new JComboBoxHelper(comboTipoAnimal);
         chTipo.setModel(Arrays.asList(TipoAnimal.values()));
 
-        JComboBoxHelper<CorPredominante> chCor = new JComboBoxHelper<>(comboCor);
+        JComboBoxHelper chCor = new JComboBoxHelper(comboCor);
         chCor.setModel(Arrays.asList(CorPredominante.values()));
     }
 
@@ -230,7 +231,7 @@ public class ManutencaoAnimal extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        
+
         try {
             AnimalRN rn = new AnimalRN();
             List<Animal> lista = rn.pesquisar(txtPesquisa.getText());
@@ -238,31 +239,72 @@ public class ManutencaoAnimal extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        
+
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+
+        try {
+            Animal animal = new Animal();
+            animal.setNome(txtNome.getText());
+            animal.setDescricao(txtDescricao.getText());
+            animal.setCorPredominante(CorPredominante.valueOf(comboCor.getSelectedItem().toString()));
+            animal.setTipoAnimal(TipoAnimal.valueOf(comboTipoAnimal.getSelectedItem().toString()));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            animal.setDataNascimento(sdf.parse(txtDataNascimento.getText()));
+
+            animal.setDono((Dono) comboDono.getSelectedItem());
+
+            AnimalRN rn = new AnimalRN();
+
+            if (txtCodigo.getText().isEmpty()) {
+                rn.salvar(animal);
+                JOptionPane.showMessageDialog(this, "Registro incluído com sucesso!");
+            } else {
+                animal.setCodigo(Integer.parseInt(txtCodigo.getText()));
+                rn.alterar(animal);
+                JOptionPane.showMessageDialog(this, "Registro alterado com sucesso!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+
+        if (txtCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Código deve ser informado");
+        } else {
+            if (JOptionPane.showConfirmDialog(this,
+                    "Deseja mesmo excluir este registro?") == JOptionPane.OK_OPTION) {
+                try {
+                    AnimalRN rn = new AnimalRN();
+                    rn.excluir(new Animal(Integer.parseInt(txtCodigo.getText())));
+                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
+            }
+        }
+
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void tblAnimalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnimalMouseClicked
-        
+
         txtCodigo.setText(tableHelper.getSelectedObject().getCodigo().toString());
         txtNome.setText(tableHelper.getSelectedObject().getNome());
         txtDescricao.setText(tableHelper.getSelectedObject().getDescricao());
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         txtDataNascimento.setText(sdf.format(tableHelper.getSelectedObject().getDataNascimento()));
-        
-        System.out.println(tableHelper.getSelectedObject().getCorPredominante().toString());
-        comboCor.setSelectedItem(tableHelper.getSelectedObject().getCorPredominante().toString());
-        comboTipoAnimal.setSelectedItem(tableHelper.getSelectedObject().getTipoAnimal().toString());
-        comboDono.setSelectedItem(tableHelper.getSelectedObject().getDono().getNome());
-        
+
+        comboCor.setSelectedItem(tableHelper.getSelectedObject().getCorPredominante());
+        comboTipoAnimal.setSelectedItem(tableHelper.getSelectedObject().getTipoAnimal());
+        comboDono.setSelectedItem(tableHelper.getSelectedObject().getDono());
+
     }//GEN-LAST:event_tblAnimalMouseClicked
 
 

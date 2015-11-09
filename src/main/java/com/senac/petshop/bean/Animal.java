@@ -10,10 +10,10 @@ import java.util.Objects;
  */
 public class Animal {
 
-    @JTableColumnMetadata(name = "Código", isKey = true)
+    @JTableColumnMetadata(name = "Código")
     private Integer codigo;
 
-    @JTableColumnMetadata(name = "Nome", isValue = true)
+    @JTableColumnMetadata(name = "Nome")
     private String nome;
     
     private Date dataNascimento;
@@ -115,7 +115,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" + "codigo=" + codigo + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", tipoAnimal=" + tipoAnimal + ", descricao=" + descricao + ", corPredominante=" + corPredominante + ", dono=" + dono + '}';
+        return getNome();
     }
     
 }

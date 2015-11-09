@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author lossurdo
  */
-public class AnimalBD extends CrudBD<Animal>{
+public class AnimalBD extends CrudBD<Animal> {
 
     @Override
     public void salvar(Animal bean) {
@@ -94,7 +94,7 @@ public class AnimalBD extends CrudBD<Animal>{
                 animalRetorno.setCorPredominante(CorPredominante.valueOf(rs.getString("cor_predominante")));
                 animalRetorno.setTipoAnimal(TipoAnimal.valueOf(rs.getString("tipo")));
                 animalRetorno.setDataNascimento(new Date(rs.getDate("data_nascimento").getTime()));
-                
+
                 // consulta dono do animal
                 DonoRN rn = new DonoRN();
                 animalRetorno.setDono(rn.consultaDonoPorAnimal(animalRetorno));
@@ -105,7 +105,7 @@ public class AnimalBD extends CrudBD<Animal>{
         } finally {
             fecharConexao(conn);
         }
-        
+
         return animalRetorno;
     }
 
@@ -144,7 +144,7 @@ public class AnimalBD extends CrudBD<Animal>{
     @Override
     public List<Animal> pesquisar(String pesquisa) {
         List<Animal> lista = new ArrayList<>();
-        
+
         Connection conn = null;
         try {
             conn = abrirConexao();
@@ -154,7 +154,7 @@ public class AnimalBD extends CrudBD<Animal>{
 
             logger.debug("Consultando: " + pesquisa);
             ResultSet rs = pstm.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 logger.debug("Registro encontrado");
                 Animal animalRetorno = new Animal();
                 animalRetorno.setCodigo(rs.getInt("codigo"));
@@ -163,11 +163,11 @@ public class AnimalBD extends CrudBD<Animal>{
                 animalRetorno.setCorPredominante(CorPredominante.valueOf(rs.getString("cor_predominante")));
                 animalRetorno.setTipoAnimal(TipoAnimal.valueOf(rs.getString("tipo")));
                 animalRetorno.setDataNascimento(new Date(rs.getDate("data_nascimento").getTime()));
-                
+
                 // consulta dono do animal
                 DonoRN rn = new DonoRN();
                 animalRetorno.setDono(rn.consultaDonoPorAnimal(animalRetorno));
-                
+
                 lista.add(animalRetorno);
             }
             logger.debug("Consulta executada com sucesso");
@@ -175,8 +175,8 @@ public class AnimalBD extends CrudBD<Animal>{
             throw new RuntimeException(e);
         } finally {
             fecharConexao(conn);
-        }        
-        
+        }
+
         return lista;
     }
 
@@ -194,7 +194,7 @@ public class AnimalBD extends CrudBD<Animal>{
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 logger.debug("Registro encontrado");
-                
+
                 Animal animalRetorno = new Animal();
                 animalRetorno.setCodigo(rs.getInt("codigo"));
                 animalRetorno.setNome(rs.getString("nome"));
@@ -202,7 +202,7 @@ public class AnimalBD extends CrudBD<Animal>{
                 animalRetorno.setTipoAnimal(TipoAnimal.valueOf(rs.getString("tipo")));
                 animalRetorno.setDataNascimento(new Date(rs.getDate("data_nascimento").getTime()));
                 animalRetorno.setDescricao(rs.getString("descricao"));
-                
+
                 lista.add(animalRetorno);
             }
             logger.debug("Consulta executada com sucesso");
@@ -211,8 +211,8 @@ public class AnimalBD extends CrudBD<Animal>{
         } finally {
             fecharConexao(conn);
         }
-        
+
         return lista;
     }
-    
+
 }
