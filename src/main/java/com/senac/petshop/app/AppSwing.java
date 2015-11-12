@@ -1,8 +1,14 @@
 package com.senac.petshop.app;
 
+import com.senac.petshop.bean.Agenda;
+import com.senac.petshop.rn.AgendaRN;
 import com.senac.petshop.swing.ManutencaoAgenda;
 import com.senac.petshop.swing.ManutencaoAnimal;
 import com.senac.petshop.swing.ManutencaoDono;
+import java.io.File;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -30,15 +36,18 @@ public class AppSwing extends javax.swing.JFrame {
         menubar = new javax.swing.JMenuBar();
         menuAtendimento = new javax.swing.JMenu();
         menuItemAgendamento = new javax.swing.JMenuItem();
-        menuItemManutencao = new javax.swing.JMenuItem();
+        menuItemRelatorio = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         menuItemSair = new javax.swing.JMenuItem();
         menuDono = new javax.swing.JMenu();
         menuItemManutDono = new javax.swing.JMenuItem();
         menuAnimal = new javax.swing.JMenu();
         menuItemManutAnimal = new javax.swing.JMenuItem();
+        menuSobre = new javax.swing.JMenu();
+        menuItemInfo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("PetShop4j Desktop");
 
         menuAtendimento.setText("Atendimento");
 
@@ -51,8 +60,13 @@ public class AppSwing extends javax.swing.JFrame {
         });
         menuAtendimento.add(menuItemAgendamento);
 
-        menuItemManutencao.setText("Manutenção");
-        menuAtendimento.add(menuItemManutencao);
+        menuItemRelatorio.setText("Relatório");
+        menuItemRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemRelatorioActionPerformed(evt);
+            }
+        });
+        menuAtendimento.add(menuItemRelatorio);
         menuAtendimento.add(jSeparator1);
 
         menuItemSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
@@ -91,6 +105,18 @@ public class AppSwing extends javax.swing.JFrame {
         menuAnimal.add(menuItemManutAnimal);
 
         menubar.add(menuAnimal);
+
+        menuSobre.setText("Sobre");
+
+        menuItemInfo.setText("Informações...");
+        menuItemInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemInfoActionPerformed(evt);
+            }
+        });
+        menuSobre.add(menuItemInfo);
+
+        menubar.add(menuSobre);
 
         setJMenuBar(menubar);
 
@@ -142,6 +168,42 @@ public class AppSwing extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuItemAgendamentoActionPerformed
 
+    private void menuItemRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRelatorioActionPerformed
+        
+        try {
+            AgendaRN rn = new AgendaRN();
+            List<Agenda> listaAgenda = rn.pesquisar("");
+            
+            StringBuilder saidaCSV = new StringBuilder();
+            // cabeçalho
+            saidaCSV.append("DATA;DONO;ANIMAL;PROCEDIMENTO;VALOR").append("\r\n");
+            
+            // conteúdo do relatório
+            for (Agenda la : listaAgenda) {
+                //saidaTXT.append();
+                saidaCSV.append("\r\n");
+            }
+            
+            FileUtils.writeStringToFile(new File("relatorio.txt"), saidaCSV.toString());
+            
+            JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
+    }//GEN-LAST:event_menuItemRelatorioActionPerformed
+
+    private void menuItemInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInfoActionPerformed
+        
+        JOptionPane.showMessageDialog(this, "FSPOA\r\n"
+                + "Faculdade de Tecnologia Senac\r\n"
+                + "Porto Alegre/RS - Brasil\r\n"
+                + "Disciplina de Lab. de Programação 2\r\n"
+                + "Curso de Análise e Desenvolvimento de Sistemas\r\n"
+                + "Prof. Rafael Lossurdo");
+        
+    }//GEN-LAST:event_menuItemInfoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -184,10 +246,12 @@ public class AppSwing extends javax.swing.JFrame {
     private javax.swing.JMenu menuAtendimento;
     private javax.swing.JMenu menuDono;
     private javax.swing.JMenuItem menuItemAgendamento;
+    private javax.swing.JMenuItem menuItemInfo;
     private javax.swing.JMenuItem menuItemManutAnimal;
     private javax.swing.JMenuItem menuItemManutDono;
-    private javax.swing.JMenuItem menuItemManutencao;
+    private javax.swing.JMenuItem menuItemRelatorio;
     private javax.swing.JMenuItem menuItemSair;
+    private javax.swing.JMenu menuSobre;
     private javax.swing.JMenuBar menubar;
     // End of variables declaration//GEN-END:variables
 }

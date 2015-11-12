@@ -4,6 +4,7 @@ import com.senac.petshop.bd.AgendaBD;
 import com.senac.petshop.bean.Agenda;
 import com.senac.petshop.infra.CrudBD;
 import com.senac.petshop.rnval.AgendaRNVal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class AgendaRN extends CrudBD<Agenda> {
 
     @Override
     public List<Agenda> pesquisar(String pesquisa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ArrayList<>();
     }
     
 }
