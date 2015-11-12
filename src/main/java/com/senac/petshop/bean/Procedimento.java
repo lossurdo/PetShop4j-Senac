@@ -87,7 +87,7 @@ public class Procedimento {
 
     @Override
     public String toString() {
-        return "Procedimento{" + "codigo=" + codigo + ", nome=" + nome + ", descricao=" + descricao + ", preco=" + preco + ", ativo=" + ativo + '}';
+        return getNome();
     }
-    
+
 }

@@ -1,5 +1,6 @@
 package com.senac.petshop.app;
 
+import com.senac.petshop.swing.ManutencaoAgenda;
 import com.senac.petshop.swing.ManutencaoAnimal;
 import com.senac.petshop.swing.ManutencaoDono;
 
@@ -41,7 +42,13 @@ public class AppSwing extends javax.swing.JFrame {
 
         menuAtendimento.setText("Atendimento");
 
+        menuItemAgendamento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         menuItemAgendamento.setText("Agendamento");
+        menuItemAgendamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAgendamentoActionPerformed(evt);
+            }
+        });
         menuAtendimento.add(menuItemAgendamento);
 
         menuItemManutencao.setText("Manutenção");
@@ -126,6 +133,14 @@ public class AppSwing extends javax.swing.JFrame {
         ma.setVisible(true);
         
     }//GEN-LAST:event_menuItemManutAnimalActionPerformed
+
+    private void menuItemAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAgendamentoActionPerformed
+        
+        ManutencaoAgenda ma = new ManutencaoAgenda();
+        desktopPane.add(ma);
+        ma.setVisible(true);
+        
+    }//GEN-LAST:event_menuItemAgendamentoActionPerformed
 
     /**
      * @param args the command line arguments
