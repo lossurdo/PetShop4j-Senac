@@ -2,7 +2,7 @@ package com.senac.petshop.rn;
 
 import com.senac.petshop.bd.AgendaBD;
 import com.senac.petshop.bean.Agenda;
-import com.senac.petshop.infra.CrudBD;
+import com.senac.petshop.infra.Crud;
 import com.senac.petshop.rnval.AgendaRNVal;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author lossurdo
  */
-public class AgendaRN extends CrudBD<Agenda> {
+public class AgendaRN implements Crud<Agenda> {
     private final AgendaBD agendaBD;
     private final AgendaRNVal agendaRNVal;
 

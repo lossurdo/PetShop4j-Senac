@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.senac.petshop.rn;
 
 import com.senac.petshop.bd.ProcedimentoBD;
 import com.senac.petshop.bean.Procedimento;
-import com.senac.petshop.infra.CrudBD;
+import com.senac.petshop.infra.Crud;
 import java.util.List;
 
 /**
  *
  * @author lossurdo
  */
-public class ProcedimentoRN extends CrudBD<Procedimento> {
+public class ProcedimentoRN implements Crud<Procedimento> {
     private final ProcedimentoBD procedimentoBD;
 
     public ProcedimentoRN() {

@@ -3,7 +3,7 @@ package com.senac.petshop.rn;
 import com.senac.petshop.bd.AnimalBD;
 import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.Dono;
-import com.senac.petshop.infra.CrudBD;
+import com.senac.petshop.infra.Crud;
 import com.senac.petshop.rnval.AnimalRNVal;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author lossurdo
  */
-public class AnimalRN extends CrudBD<Animal> {
+public class AnimalRN implements Crud<Animal> {
     
     private final AnimalBD animalBD;
     private final AnimalRNVal animalRNVal;
