@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation responsável pela marcação de metadados para exibição em
+ * Annotation responsÃ¡vel pela marcaÃ§Ã£o de metadados para exibiÃ§Ã£o em
  * componentes JTable e JComboBox
  *
  * @author lossurdo
@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 public @interface JTableColumnMetadata {
 
     /**
-     * Nome do cabeçalho da coluna
+     * Nome do cabeÃ§alho da coluna
      *
      * @return
      */
@@ -31,14 +31,14 @@ public @interface JTableColumnMetadata {
     public int size() default 0;
 
     /**
-     * Formato em que os dados serão exibidos
+     * Formato em que os dados serÃ£o exibidos
      *
      * @return
      */
     public ColumnMetadataFormat format() default ColumnMetadataFormat.DEFAULT;
 
     /**
-     * Alinhamento em que os dados serão exibidos
+     * Alinhamento em que os dados serÃ£o exibidos
      *
      * @return
      */

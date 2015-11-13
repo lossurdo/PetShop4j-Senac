@@ -26,7 +26,7 @@ public class JListHelper {
 
 	/**
 	 * Construtor
-	 * @param list lista padrão (esquerda)
+	 * @param list lista padrÃ£o (esquerda)
 	 */
 	public JListHelper(JList list) {
 		this.listObjLeft = list;
@@ -36,10 +36,10 @@ public class JListHelper {
 	 * Construtor
 	 * @param listLeft lista esquerda
 	 * @param listRight lista direita
-	 * @param allRight botão-ação move todos para direita
-	 * @param allLeft botão-ação move todos para esquerda
-	 * @param moveRight botão-ação move selecionados para direita
-	 * @param moveLeft botão-ação move selecionados para esquerda
+	 * @param allRight botÃ£o-aÃ§Ã£o move todos para direita
+	 * @param allLeft botÃ£o-aÃ§Ã£o move todos para esquerda
+	 * @param moveRight botÃ£o-aÃ§Ã£o move selecionados para direita
+	 * @param moveLeft botÃ£o-aÃ§Ã£o move selecionados para esquerda
 	 */
 	public JListHelper(JList listLeft, JList listRight, JButton allRight, JButton allLeft, JButton moveRight, JButton moveLeft) {
 		this.listObjLeft = listLeft;
@@ -51,7 +51,7 @@ public class JListHelper {
 	}
 
 	/**
-	 * Seta a lista padrão
+	 * Seta a lista padrÃ£o
 	 * @param list Esquerda
 	 */
 	public void setModel(List list) {
@@ -77,7 +77,7 @@ public class JListHelper {
 	}
 	
 	/**
-	 * Obtém o objeto selecionado
+	 * ObtÃ©m o objeto selecionado
 	 * @return Esquerda
 	 */
 	public Object getSelectedLeftObject() {
@@ -85,7 +85,7 @@ public class JListHelper {
 	}
 	
 	/**
-	 * Obtém o objeto selecionado
+	 * ObtÃ©m o objeto selecionado
 	 * @return Direita
 	 */
 	public Object getSelectedRightObject() {
@@ -93,7 +93,7 @@ public class JListHelper {
 	}
 	
 	/**
-	 * Atribui o listener de botão ao modelo
+	 * Atribui o listener de botÃ£o ao modelo
 	 */
 	public void applyListeners() {
 		// limpa duplicados
@@ -184,7 +184,7 @@ public class JListHelper {
 	}
 	
 	/**
-	 * Retorna o objeto selecionado padrão
+	 * Retorna o objeto selecionado padrÃ£o
 	 * @return Esquerda
 	 */
 	public Object getSelectedObject() {

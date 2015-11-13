@@ -3,7 +3,7 @@ package com.jdf.swing.helper.jtable;
 import java.lang.reflect.Field;
 
 /**
- * Classe utilitária para uso nos componentes JTable
+ * Classe utilitÃ¡ria para uso nos componentes JTable
  *
  * @author lossurdo
  * @since 22/03/2009
@@ -21,7 +21,7 @@ public class JTableAssist {
     }
 
     /**
-     * Verifica se um atributo de uma classe (Field) está anotado com
+     * Verifica se um atributo de uma classe (Field) estÃ¡ anotado com
      * JTableColumnMetadata
      *
      * @param f Atributo
@@ -36,7 +36,7 @@ public class JTableAssist {
     }
 
     /**
-     * Verifica qual o nome da coluna anotada em um atributo através da
+     * Verifica qual o nome da coluna anotada em um atributo atravÃ©s da
      * annotation JTableColumnMetadata
      *
      * @param f Atributo
@@ -52,7 +52,7 @@ public class JTableAssist {
     }
 
     /**
-     * Verifica qual o formato da coluna anotada em um atributo através da
+     * Verifica qual o formato da coluna anotada em um atributo atravÃ©s da
      * annotation JTableColumnMetadata
      *
      * @param f Atributo
@@ -68,7 +68,7 @@ public class JTableAssist {
     }
 
     /**
-     * Verifica qual o alinhamento da coluna anotada em um atributo através da
+     * Verifica qual o alinhamento da coluna anotada em um atributo atravÃ©s da
      * annotation JTableColumnMetadata
      *
      * @param f Atributo

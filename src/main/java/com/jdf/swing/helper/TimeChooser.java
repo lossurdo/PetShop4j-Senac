@@ -37,7 +37,7 @@ class TimeChooser extends JDialog {
     }
 
 	/**
-	 * Abre seletor de horário
+	 * Abre seletor de horÃ¡rio
 	 * @param date Hora inicial
 	 * @return Hora escolhida
 	 */
@@ -52,7 +52,7 @@ class TimeChooser extends JDialog {
 	}
 	
 	/**
-	 * Configurações básicas do componente de slider
+	 * ConfiguraÃ§Ãµes bÃ¡sicas do componente de slider
 	 * @param s
 	 */
 	private void configSlider(JSlider s) {
@@ -147,7 +147,7 @@ class TimeChooser extends JDialog {
     }//GEN-LAST:event_btnSelecionaActionPerformed
 
 	/**
-	 * Atualiza a hora no botão e no atributo a ser devolvido
+	 * Atualiza a hora no botÃ£o e no atributo a ser devolvido
 	 */
     private void atualizaHora() {
         String h = Caracteres.strzero(sliderHora.getValue());
