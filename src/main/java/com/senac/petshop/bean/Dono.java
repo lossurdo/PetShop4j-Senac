@@ -31,7 +31,7 @@ public class Dono implements Comparable<Dono> {
     @JTableColumnMetadata(name = "Email")
     private String email;
 
-    @JTableColumnMetadata(name = "Email", format = ColumnMetadataFormat.DATE_DD_MM_YYYY)
+    @JTableColumnMetadata(name = "Dt.Nasc.", format = ColumnMetadataFormat.DATE_DD_MM_YYYY)
     private Date dataNascimento;
     
     private List<Animal> animais;
