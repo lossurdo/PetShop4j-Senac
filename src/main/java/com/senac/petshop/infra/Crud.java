@@ -2,7 +2,7 @@ package com.senac.petshop.infra;
 
 import java.util.List;
 
-interface Crud<T> {
+public interface Crud<T> {
 
     void salvar(T bean);
     void excluir(T bean);
