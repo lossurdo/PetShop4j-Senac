@@ -4,10 +4,14 @@ import com.senac.petshop.bean.Agenda;
 import com.senac.petshop.bean.Animal;
 import com.senac.petshop.bean.Procedimento;
 import com.senac.petshop.infra.CrudBD;
+import com.senac.petshop.rn.AnimalRN;
+import com.senac.petshop.rn.ProcedimentoRN;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -74,22 +78,160 @@ public class AgendaBD extends CrudBD<Agenda> {
 
     @Override
     public void excluir(Agenda bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = null;
+        try {
+            conn = abrirConexao();
+
+            PreparedStatement pstm = conn.prepareStatement("DELETE FROM agenda_animal WHERE agenda_codigo=?");
+            pstm.setInt(1, bean.getCodigo());
+
+            logger.debug("Excluindo: " + bean);
+            pstm.execute();
+            
+            pstm = conn.prepareStatement("DELETE FROM agenda WHERE codigo=?");            
+            pstm.setInt(1, bean.getCodigo());
+
+            logger.debug("Excluindo: " + bean);
+            pstm.execute();
+            
+            commitTransacao(conn);
+            logger.debug("Exclusão executada com sucesso");
+        } catch (Exception e) {
+            rollbackTransacao(conn);
+            throw new RuntimeException(e);
+        } finally {
+            fecharConexao(conn);
+        }
     }
 
     @Override
     public Agenda consultar(Agenda bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // definição do SQL com base nos dados informados para pesquisa
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM agenda a WHERE a.codigo = ?");
+
+        Connection conn = null;
+        try {
+            conn = abrirConexao();
+
+            PreparedStatement pstm = conn.prepareStatement(sql.toString());
+            pstm.setInt(1, bean.getCodigo());
+
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                logger.debug("Registro encontrado");
+                
+                Agenda animal = new Agenda(rs.getInt("codigo"));
+                animal.setData(new Date(rs.getTimestamp("data_hora").getTime()));
+                animal.setDescricao(rs.getString("descricao"));
+                animal.setValorTotal(rs.getDouble("valor_total"));
+                animal.setEntradaAnimal(rs.getBoolean("entrada_animal"));
+                animal.setSaidaAnimal(rs.getBoolean("saida_animal"));
+
+                // buscando lista de animais de uma agenda
+                sql = new StringBuilder();
+                sql.append("SELECT * FROM animal a INNER JOIN agenda_animal aa on aa.animal_codigo=a.codigo WHERE aa.agenda_codigo = ?");
+                pstm = conn.prepareStatement(sql.toString());
+                pstm.setInt(1, bean.getCodigo());
+                
+                ResultSet rsa = pstm.executeQuery();
+                AnimalRN animalRN = new AnimalRN();
+                while(rsa.next()) {
+                    animal.getAnimais().add(animalRN.consultar(new Animal(rsa.getInt("codigo"))));
+                }
+                
+                // buscando lista de procedimentos de uma agenda
+                sql = new StringBuilder();
+                sql.append("SELECT * FROM procedimento p INNER JOIN agenda_animal aa on aa.procedimento_id=p.codigo WHERE aa.agenda_codigo = ?");
+                pstm = conn.prepareStatement(sql.toString());
+                pstm.setInt(1, bean.getCodigo());
+
+                ResultSet rsp = pstm.executeQuery();
+                ProcedimentoRN procedimentoRN = new ProcedimentoRN();
+                while(rsp.next()) {
+                    animal.getProcedimentos().add(procedimentoRN.consultar(new Procedimento(rsp.getInt("codigo"))));
+                }
+                
+                return animal;
+            }                        
+            logger.debug("Pesquisa executada com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            fecharConexao(conn);
+        }
+        
+        return null;
     }
 
     @Override
     public void alterar(Agenda bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Ainda não implementado!");
     }
 
     @Override
     public List<Agenda> pesquisar(String pesquisa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Agenda> lista = new ArrayList<>();
+
+        // definição do SQL com base nos dados informados para pesquisa
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM agenda a");
+
+        Connection conn = null;
+        try {
+            conn = abrirConexao();
+
+            PreparedStatement pstm = conn.prepareStatement(sql.toString());
+
+            logger.debug("Pesquisando: " + pesquisa);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                logger.debug("Registro encontrado");
+                
+                Agenda a = new Agenda(rs.getInt("codigo"));
+                a.setData(new Date(rs.getTimestamp("data_hora").getTime()));
+                a.setDescricao(rs.getString("descricao"));
+                a.setValorTotal(rs.getDouble("valor_total"));
+                a.setEntradaAnimal(rs.getBoolean("entrada_animal"));
+                a.setSaidaAnimal(rs.getBoolean("saida_animal"));
+                
+                lista.add(a);
+            }
+                        
+            for (Agenda lis : lista) {
+                // buscando lista de animais de uma agenda
+                sql = new StringBuilder();
+                sql.append("SELECT * FROM animal a INNER JOIN agenda_animal aa on aa.agenda_codigo=a.codigo WHERE aa.agenda_codigo = ?");
+                pstm = conn.prepareStatement(sql.toString());
+                pstm.setInt(1, lis.getCodigo());
+                
+                ResultSet rsa = pstm.executeQuery();
+                AnimalRN animalRN = new AnimalRN();
+                while(rsa.next()) {
+                    lis.getAnimais().add(animalRN.consultar(new Animal(rsa.getInt("codigo"))));
+                }
+                
+                // buscando lista de procedimentos de uma agenda
+                sql = new StringBuilder();
+                sql.append("SELECT * FROM procedimento p INNER JOIN agenda_animal aa on aa.procedimento_id=p.codigo WHERE aa.agenda_codigo = ?");
+                pstm = conn.prepareStatement(sql.toString());
+                pstm.setInt(1, lis.getCodigo());
+
+                ResultSet rsp = pstm.executeQuery();
+                ProcedimentoRN procedimentoRN = new ProcedimentoRN();
+                while(rsp.next()) {
+                    lis.getProcedimentos().add(procedimentoRN.consultar(new Procedimento(rsp.getInt("codigo"))));
+                }
+            }
+            
+            logger.debug("Pesquisa executada com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            fecharConexao(conn);
+        }
+
+        return lista;
     }
     
 }

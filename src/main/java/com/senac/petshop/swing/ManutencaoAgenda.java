@@ -1,14 +1,13 @@
 package com.senac.petshop.swing;
 
 import com.jdf.swing.helper.JButtonHelper;
+import com.jdf.swing.helper.JComboBoxHelper;
 import com.jdf.swing.helper.JListHelper;
 import com.senac.petshop.bean.Agenda;
-import com.senac.petshop.bean.Procedimento;
 import com.senac.petshop.rn.AgendaRN;
 import com.senac.petshop.rn.AnimalRN;
 import com.senac.petshop.rn.ProcedimentoRN;
 import java.util.Date;
-import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,26 +20,27 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
     private JButtonHelper selHora;
     private JListHelper selAnimais;
     private JListHelper selProcedimentos;
-    
+
+    private JComboBoxHelper comboboxAgenda;
+
     public ManutencaoAgenda() {
         initComponents();
-        
+
         selData = new JButtonHelper(btnData);
         selData.transformToDateButton(new Date());
 
         selHora = new JButtonHelper(btnHora);
         selHora.transformToTimeButton(new Date());
-        
+
         selAnimais = new JListHelper(listAnimais);
         AnimalRN rnA = new AnimalRN();
         selAnimais.setModel(rnA.pesquisar(""));
-        
+
         selProcedimentos = new JListHelper(listProcedimentos);
         ProcedimentoRN rnP = new ProcedimentoRN();
         selProcedimentos.setModel(rnP.pesquisar(""));
-        
-    }
 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,8 +70,9 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
         comboSelecaoAgenda = new javax.swing.JComboBox();
         btnData = new javax.swing.JButton();
         btnHora = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         btnAgendar = new javax.swing.JButton();
+        btnAtualizarAgenda = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -88,20 +89,10 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Animais");
 
-        listAnimais.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listAnimais);
 
         jLabel4.setText("Procedimentos");
 
-        listProcedimentos.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(listProcedimentos);
 
         jLabel5.setText("Descrição");
@@ -112,18 +103,34 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Valor Total");
 
-        comboSelecaoAgenda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSelecaoAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboSelecaoAgendaActionPerformed(evt);
+            }
+        });
 
         btnData.setText("jButton1");
 
         btnHora.setText("jButton1");
 
-        jButton1.setText("Excluir");
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnAgendar.setText("Agendar");
         btnAgendar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgendarActionPerformed(evt);
+            }
+        });
+
+        btnAtualizarAgenda.setText("Atualizar Agenda");
+        btnAtualizarAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarAgendaActionPerformed(evt);
             }
         });
 
@@ -162,19 +169,20 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(jScrollPane3))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(comboSelecaoAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnAgendar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(comboSelecaoAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnAtualizarAgenda)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAgendar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnExcluir))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -210,16 +218,17 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
                     .addComponent(comboSelecaoAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(btnAgendar))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(btnExcluir)
+                    .addComponent(btnAgendar)
+                    .addComponent(btnAtualizarAgenda))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-        
+
         try {
             Agenda agenda = new Agenda();
             agenda.setData(JButtonHelper.toDateTime(selData, selHora));
@@ -228,19 +237,10 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
             agenda.setSaidaAnimal(checkSaida.isSelected());
             agenda.setAnimais(selAnimais.getSelectedObjects());
             agenda.setProcedimentos(selProcedimentos.getSelectedObjects());
-            
-            // calculando preço
-            double total = 0.0;
-            for (Iterator it = selProcedimentos.getSelectedObjects().iterator(); it.hasNext();) {
-                Procedimento p = (Procedimento) it.next();
-                total += p.getPreco();
-            }
-            
-            agenda.setValorTotal(total);
-            
+
             AgendaRN rn = new AgendaRN();
 
-            if(txtCodigo.getText().isEmpty()) {
+            if (txtCodigo.getText().isEmpty()) {
                 rn.salvar(agenda);
                 JOptionPane.showMessageDialog(this, "Registro incluído com sucesso!");
             } else {
@@ -250,19 +250,68 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
-        }        
-        
+        }
+
     }//GEN-LAST:event_btnAgendarActionPerformed
+
+    private void comboSelecaoAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSelecaoAgendaActionPerformed
+
+        if (comboSelecaoAgenda.getSelectedIndex() != -1) { // somente se algum selecionado
+            Agenda agendaSelecionada = (Agenda) comboSelecaoAgenda.getSelectedItem();
+            
+            AgendaRN rn = new AgendaRN();
+            agendaSelecionada = rn.consultar(agendaSelecionada);
+            
+            txtCodigo.setText(agendaSelecionada.getCodigo().toString());
+            txtDescricao.setText(agendaSelecionada.getDescricao());
+            txtValorTotal.setText(agendaSelecionada.getValorTotal().toString());
+
+            checkEntrada.setSelected(agendaSelecionada.getEntradaAnimal());
+            checkSaida.setSelected(agendaSelecionada.getSaidaAnimal());
+
+            selData.setDate(agendaSelecionada.getData());
+            selHora.setTime(agendaSelecionada.getData());
+        }
+
+    }//GEN-LAST:event_comboSelecaoAgendaActionPerformed
+
+    private void btnAtualizarAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarAgendaActionPerformed
+
+        AgendaRN rnAg = new AgendaRN();
+        comboboxAgenda = new JComboBoxHelper(comboSelecaoAgenda);
+        comboboxAgenda.setModel(rnAg.pesquisar(""));
+
+    }//GEN-LAST:event_btnAtualizarAgendaActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+        if (txtCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Código deve ser informado");
+        } else {
+            if (JOptionPane.showConfirmDialog(this,
+                    "Deseja mesmo excluir este registro?") == JOptionPane.OK_OPTION) {
+                try {
+                    AgendaRN rn = new AgendaRN();
+                    rn.excluir(new Agenda(Integer.parseInt(txtCodigo.getText())));
+                    JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgendar;
+    private javax.swing.JButton btnAtualizarAgenda;
     private javax.swing.JButton btnData;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnHora;
     private javax.swing.JCheckBox checkEntrada;
     private javax.swing.JCheckBox checkSaida;
     private javax.swing.JComboBox comboSelecaoAgenda;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -1,5 +1,6 @@
 package com.senac.petshop.app;
 
+import com.jdf.swing.helper.JFrameHelper;
 import com.senac.petshop.bean.Agenda;
 import com.senac.petshop.rn.AgendaRN;
 import com.senac.petshop.swing.ManutencaoAgenda;
@@ -19,8 +20,11 @@ public class AppSwing extends javax.swing.JFrame {
     public AppSwing() {
         initComponents();
         
+        JFrameHelper fh = new JFrameHelper(this);                 
+        fh.setBiggerSize();
+        
         // centraliza janela
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null);               
     }
 
     /**
@@ -125,14 +129,14 @@ public class AppSwing extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();

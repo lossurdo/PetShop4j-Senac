@@ -121,7 +121,7 @@ public class Agenda {
 
     @Override
     public String toString() {
-        return "Agenda{" + "codigo=" + codigo + ", data=" + data + ", animais=" + animais + ", procedimentos=" + procedimentos + ", descricao=" + descricao + ", entradaAnimal=" + entradaAnimal + ", saidaAnimal=" + saidaAnimal + ", valorTotal=" + valorTotal + '}';
+        return getCodigo() + " - " + getData();
     }
 
 }

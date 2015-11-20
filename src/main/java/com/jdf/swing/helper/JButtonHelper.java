@@ -30,6 +30,8 @@ public class JButtonHelper implements IconSets, JDFSecurity {
 	private static final DateChooser dateChooser = new DateChooser((JFrame) null);
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat(
 			"dd/MM/yyyy");
+	private static final DateFormat TIME_FORMAT = new SimpleDateFormat(
+			"HH:mm");
 	private static final TimeChooser timeChooser = new TimeChooser(null);
 
 	/**
@@ -129,6 +131,11 @@ public class JButtonHelper implements IconSets, JDFSecurity {
 	public void setDate(Date date) {
 		this.date = date;
 		button.setText(DATE_FORMAT.format(date));
+	}
+
+	public void setTime(Date date) {
+		this.date = date;
+		button.setText(TIME_FORMAT.format(date));
 	}
 
 	/**

@@ -24,17 +24,17 @@ public class AgendaRNVal implements ValidacaoRN<Agenda> {
 
     @Override
     public void validarExcluir(Agenda bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void validarConsultar(Agenda bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void validarAlterar(Agenda bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
     
 }
