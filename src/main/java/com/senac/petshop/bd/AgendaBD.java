@@ -166,7 +166,58 @@ public class AgendaBD extends CrudBD<Agenda> {
 
     @Override
     public void alterar(Agenda bean) {
-        throw new UnsupportedOperationException("Ainda não implementado!");
+        Connection conn = null;
+        try {
+            conn = abrirConexao();
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE agenda  ");
+            sql.append("SET data_hora = ?, descricao = ?, entrada_animal = ?, saida_animal = ?, valor_total = ? ");
+            sql.append("WHERE codigo = ?  ");
+
+            PreparedStatement pstm = conn.prepareStatement(sql.toString());
+            pstm.setTimestamp(1, new Timestamp(bean.getData().getTime()));
+            pstm.setString(2, bean.getDescricao());
+            pstm.setBoolean(3, bean.getEntradaAnimal());
+            pstm.setBoolean(4, bean.getSaidaAnimal());
+            pstm.setDouble(5, bean.getValorTotal());
+            pstm.setInt(6, bean.getCodigo());
+
+            logger.debug("Alterando: " + bean);
+            pstm.execute();
+            
+            logger.debug("Excluindo N:N");
+            pstm = conn.prepareStatement("DELETE FROM agenda_animal WHERE agenda_codigo = ?");
+            pstm.setInt(1, bean.getCodigo());
+            pstm.execute();
+            
+            sql = new StringBuilder();
+            sql.append("INSERT INTO agenda_animal ");
+            sql.append("(agenda_codigo, animal_codigo, procedimento_id)  ");
+            sql.append("VALUES  ");
+            sql.append("(?,?,?) ");
+            
+            // grava relaçao n:n
+            for(Animal a : bean.getAnimais()) {
+                for(Procedimento p : bean.getProcedimentos()) {
+                    pstm = conn.prepareStatement(sql.toString());
+                    pstm.setInt(1, bean.getCodigo());
+                    pstm.setInt(2, a.getCodigo());
+                    pstm.setInt(3, p.getCodigo());
+                    
+                    logger.debug("Salvando: " + bean);
+                    pstm.execute();
+                }
+            }
+            
+            commitTransacao(conn);
+            logger.debug("Alteração executada com sucesso");
+        } catch (Exception e) {
+            rollbackTransacao(conn);
+            throw new RuntimeException(e);
+        } finally {
+            fecharConexao(conn);
+        }
     }
 
     @Override
@@ -201,7 +252,7 @@ public class AgendaBD extends CrudBD<Agenda> {
             for (Agenda lis : lista) {
                 // buscando lista de animais de uma agenda
                 sql = new StringBuilder();
-                sql.append("SELECT * FROM animal a INNER JOIN agenda_animal aa on aa.agenda_codigo=a.codigo WHERE aa.agenda_codigo = ?");
+                sql.append("SELECT * FROM animal a INNER JOIN agenda_animal aa on aa.animal_codigo=a.codigo WHERE aa.agenda_codigo = ?");
                 pstm = conn.prepareStatement(sql.toString());
                 pstm.setInt(1, lis.getCodigo());
                 

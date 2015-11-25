@@ -26,6 +26,37 @@ public class ProcedimentoBD extends CrudBD<Procedimento> {
 
     @Override
     public Procedimento consultar(Procedimento bean) {
+        // definição do SQL com base nos dados informados para pesquisa
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM procedimento p WHERE p.codigo = ?");
+
+        Connection conn = null;
+        try {
+            conn = abrirConexao();
+
+            PreparedStatement pstm = conn.prepareStatement(sql.toString());
+            pstm.setInt(1, bean.getCodigo());
+
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                logger.debug("Registro encontrado");
+                
+                Procedimento procedimento = new Procedimento();
+                procedimento.setCodigo(rs.getInt("codigo"));
+                procedimento.setNome(rs.getString("nome"));
+                procedimento.setDescricao(rs.getString("nome"));
+                procedimento.setPreco(rs.getDouble("preco"));
+                procedimento.setAtivo(rs.getBoolean("ativo"));
+                
+                return procedimento;
+            }                        
+            logger.debug("Pesquisa executada com sucesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            fecharConexao(conn);
+        }
+        
         return null;
     }
 

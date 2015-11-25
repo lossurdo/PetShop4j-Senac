@@ -24,14 +24,7 @@ public class AgendaRN implements Crud<Agenda> {
     @Override
     public void salvar(Agenda bean) {
         agendaRNVal.validarSalvar(bean);
-
-        // calculando preço
-        double total = 0.0;
-        for(Procedimento p : bean.getProcedimentos()) {
-            total += p.getPreco();
-        }
-        bean.setValorTotal(total * bean.getAnimais().size());
-
+        calcularPreco(bean);
         agendaBD.salvar(bean);
     }
 
@@ -49,7 +42,9 @@ public class AgendaRN implements Crud<Agenda> {
 
     @Override
     public void alterar(Agenda bean) {
-        throw new UnsupportedOperationException("Ainda não implementado!");
+        agendaRNVal.validarSalvar(bean);
+        calcularPreco(bean);
+        agendaBD.alterar(bean);
     }
 
     @Override
@@ -57,4 +52,13 @@ public class AgendaRN implements Crud<Agenda> {
         return agendaBD.pesquisar(pesquisa);
     }
 
+    private void calcularPreco(Agenda bean) {
+        // calculando preço
+        double total = 0.0;
+        for(Procedimento p : bean.getProcedimentos()) {
+            total += p.getPreco();
+        }
+        bean.setValorTotal(total * bean.getAnimais().size());
+    }
+    
 }

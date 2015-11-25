@@ -2,11 +2,14 @@ package com.senac.petshop.app;
 
 import com.jdf.swing.helper.JFrameHelper;
 import com.senac.petshop.bean.Agenda;
+import com.senac.petshop.bean.Animal;
+import com.senac.petshop.bean.Procedimento;
 import com.senac.petshop.rn.AgendaRN;
 import com.senac.petshop.swing.ManutencaoAgenda;
 import com.senac.petshop.swing.ManutencaoAnimal;
 import com.senac.petshop.swing.ManutencaoDono;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
@@ -64,6 +67,7 @@ public class AppSwing extends javax.swing.JFrame {
         });
         menuAtendimento.add(menuItemAgendamento);
 
+        menuItemRelatorio.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
         menuItemRelatorio.setText("Relatório");
         menuItemRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,19 +180,28 @@ public class AppSwing extends javax.swing.JFrame {
         
         try {
             AgendaRN rn = new AgendaRN();
-            List<Agenda> listaAgenda = rn.pesquisar("");
+            List<Agenda> listaAgenda = rn.pesquisar(null);
             
             StringBuilder saidaCSV = new StringBuilder();
             // cabeçalho
-            saidaCSV.append("DATA;DONO;ANIMAL;PROCEDIMENTO;VALOR").append("\r\n");
+            saidaCSV.append("CODIGO;DATA;ANIMAL;DONO;PROCEDIMENTO;VALOR").append("\r\n");
             
             // conteúdo do relatório
             for (Agenda la : listaAgenda) {
-                //saidaTXT.append();
-                saidaCSV.append("\r\n");
+                for(Animal a : la.getAnimais()) {
+                    for(Procedimento p : la.getProcedimentos()) {
+                        saidaCSV.append(la.getCodigo()).append(";");
+                        saidaCSV.append(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(la.getData())).append(";");
+                        saidaCSV.append(a.getNome()).append(";");                        
+                        saidaCSV.append(a.getDono().getNome()).append(";");
+                        saidaCSV.append(p.getNome()).append(";");
+                        saidaCSV.append(p.getPreco()).append(";");
+                        saidaCSV.append("\r\n");
+                    }
+                }
             }
             
-            FileUtils.writeStringToFile(new File("relatorio.txt"), saidaCSV.toString());
+            FileUtils.writeStringToFile(new File("relatorio.csv"), saidaCSV.toString());
             
             JOptionPane.showMessageDialog(this, "Relatório gerado com sucesso!");
         } catch (Exception e) {

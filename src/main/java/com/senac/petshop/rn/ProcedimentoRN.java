@@ -28,7 +28,7 @@ public class ProcedimentoRN implements Crud<Procedimento> {
 
     @Override
     public Procedimento consultar(Procedimento bean) {
-        return null;
+        return procedimentoBD.consultar(bean);
     }
 
     @Override

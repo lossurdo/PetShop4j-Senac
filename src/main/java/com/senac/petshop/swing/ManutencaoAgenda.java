@@ -271,6 +271,10 @@ public class ManutencaoAgenda extends javax.swing.JInternalFrame {
 
             selData.setDate(agendaSelecionada.getData());
             selHora.setTime(agendaSelecionada.getData());
+            
+            selAnimais.setSelectedModel(agendaSelecionada.getAnimais());
+            System.out.println(">>> " + agendaSelecionada.getProcedimentos());
+            selProcedimentos.setSelectedModel(agendaSelecionada.getProcedimentos());
         }
 
     }//GEN-LAST:event_comboSelecaoAgendaActionPerformed
