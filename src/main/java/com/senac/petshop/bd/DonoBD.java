@@ -37,10 +37,10 @@ public class DonoBD extends CrudBD<Dono> {
             pstm.setString(5, bean.getEmail());
             pstm.setDate(6, new java.sql.Date(bean.getDataNascimento().getTime()));
 
-            logger.debug("Salvando: " + bean);
+            logger.info("Salvando: " + bean.toString());
             pstm.execute();
             commitTransacao(conn);
-            logger.debug("Salvamento executado com sucesso");
+            logger.info("Salvamento executado com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -58,10 +58,10 @@ public class DonoBD extends CrudBD<Dono> {
             PreparedStatement pstm = conn.prepareStatement("DELETE FROM dono WHERE codigo=?");
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Excluindo: " + bean);
+            logger.info("Excluindo: " + bean);
             pstm.execute();
             commitTransacao(conn);
-            logger.debug("Exclusão executada com sucesso");
+            logger.info("Exclusão executada com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -81,10 +81,10 @@ public class DonoBD extends CrudBD<Dono> {
             PreparedStatement pstm = conn.prepareStatement("SELECT * FROM dono WHERE codigo=?");
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Consultando: " + bean);
+            logger.info("Consultando: " + bean);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 donoRetorno = new Dono();
                 donoRetorno.setCodigo(rs.getInt("codigo"));
                 donoRetorno.setNome(rs.getString("nome"));
@@ -98,7 +98,7 @@ public class DonoBD extends CrudBD<Dono> {
                 AnimalRN rn = new AnimalRN();
                 donoRetorno.setAnimais(rn.consultarPorDono(donoRetorno));
             }
-            logger.debug("Consulta executada com sucesso");
+            logger.info("Consulta executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -130,10 +130,10 @@ public class DonoBD extends CrudBD<Dono> {
             pstm.setDate(6, new java.sql.Date(bean.getDataNascimento().getTime()));
             pstm.setInt(7, bean.getCodigo());
 
-            logger.debug("Alterando: " + bean);
+            logger.info("Alterando: " + bean);
             pstm.execute();
             commitTransacao(conn);
-            logger.debug("Alteração executada com sucesso");
+            logger.info("Alteração executada com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -164,10 +164,10 @@ public class DonoBD extends CrudBD<Dono> {
             pstm.setString(2, "%" + pesquisa + "%");
             pstm.setString(3, "%" + pesquisa + "%");
 
-            logger.debug("Pesquisando: " + pesquisa);
+            logger.info("Pesquisando: " + pesquisa);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 
                 Dono dono = new Dono();
                 dono.setCodigo(rs.getInt("codigo"));
@@ -184,7 +184,7 @@ public class DonoBD extends CrudBD<Dono> {
 
                 lista.add(dono);
             }
-            logger.debug("Pesquisa executada com sucesso");
+            logger.info("Pesquisa executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -210,10 +210,10 @@ public class DonoBD extends CrudBD<Dono> {
             PreparedStatement pstm = conn.prepareStatement(sql.toString());
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Consultando: " + bean);
+            logger.info("Consultando: " + bean);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 donoRetorno = new Dono();
                 donoRetorno.setCodigo(rs.getInt("codigo"));
                 donoRetorno.setNome(rs.getString("nome"));
@@ -227,7 +227,7 @@ public class DonoBD extends CrudBD<Dono> {
                 AnimalRN rn = new AnimalRN();
                 donoRetorno.setAnimais(rn.consultarPorDono(donoRetorno));
             }
-            logger.debug("Consulta executada com sucesso");
+            logger.info("Consulta executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

@@ -3,7 +3,8 @@ package com.senac.petshop.infra;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
+
 
 /**
  * Classe que, posteriormente, será utilizada para armazenar dados de conexão
@@ -13,7 +14,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class CrudBD<T> implements Crud<T> {
 
-    protected static final Logger logger = Logger.getLogger(CrudBD.class);
+    protected static final Logger logger = Logger.getLogger(CrudBD.class.getName());
 
     protected final String BD_STRING_CONEXAO = Propriedades.getInstance().get("db.string");
     protected final String BD_USERNAME = Propriedades.getInstance().get("db.user");
@@ -21,9 +22,9 @@ public abstract class CrudBD<T> implements Crud<T> {
 
     public CrudBD() {
         try {
-            logger.debug("Identificando Driver JDBC");
+            logger.info("Identificando Driver JDBC");
             Class.forName(Propriedades.getInstance().get("db.driver"));
-            logger.debug("Driver JDBC identificado com sucesso");
+            logger.info("Driver JDBC identificado com sucesso");
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -31,7 +32,7 @@ public abstract class CrudBD<T> implements Crud<T> {
 
     public Connection abrirConexao() {
         try {
-            logger.debug("Abrindo a conexão com o banco de dados");
+            logger.info("Abrindo a conexão com o banco de dados");
             final Connection conexao = DriverManager.getConnection(BD_STRING_CONEXAO, BD_USERNAME, BD_PASSWORD);
 
             /*
@@ -44,7 +45,7 @@ public abstract class CrudBD<T> implements Crud<T> {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
-            logger.debug("Conexão com o banco de dados aberta com sucesso!");
+            logger.info("Conexão com o banco de dados aberta com sucesso!");
         }
     }
 
@@ -52,10 +53,10 @@ public abstract class CrudBD<T> implements Crud<T> {
         try {
             if (connection != null) {
                 connection.close();
-                logger.debug("Conexão com o banco de dados encerrada com sucesso");
+                logger.info("Conexão com o banco de dados encerrada com sucesso");
             }
         } catch (Exception e) {
-            logger.error("Problema ao fechar conexão com banco de dados", e);
+            logger.severe("Problema ao fechar conexão com banco de dados: " + e.getMessage());
         }
     }
 
@@ -63,9 +64,9 @@ public abstract class CrudBD<T> implements Crud<T> {
         if (connection != null) {
             try {
                 connection.commit();
-                logger.debug("COMMIT da transação efetuado");
+                logger.info("COMMIT da transação efetuado");
             } catch (SQLException ex) {
-                logger.error("Problema ao efetuar COMMIT no banco de dados", ex);
+                logger.severe("Problema ao efetuar COMMIT no banco de dados: " + ex.getMessage());
             }
         }
     }
@@ -74,9 +75,9 @@ public abstract class CrudBD<T> implements Crud<T> {
         if (connection != null) {
             try {
                 connection.rollback();
-                logger.debug("ROLLBACK da transação efetuado");
+                logger.info("ROLLBACK da transação efetuado");
             } catch (SQLException ex) {
-                logger.error("Problema ao efetuar ROLLBACK no banco de dados", ex);
+                logger.severe("Problema ao efetuar ROLLBACK no banco de dados: " + ex.getMessage());
             }
         }
     }

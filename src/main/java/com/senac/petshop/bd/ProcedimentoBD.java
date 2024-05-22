@@ -39,7 +39,7 @@ public class ProcedimentoBD extends CrudBD<Procedimento> {
 
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 
                 Procedimento procedimento = new Procedimento();
                 procedimento.setCodigo(rs.getInt("codigo"));
@@ -50,7 +50,7 @@ public class ProcedimentoBD extends CrudBD<Procedimento> {
                 
                 return procedimento;
             }                        
-            logger.debug("Pesquisa executada com sucesso");
+            logger.info("Pesquisa executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -83,10 +83,10 @@ public class ProcedimentoBD extends CrudBD<Procedimento> {
             PreparedStatement pstm = conn.prepareStatement(sql.toString());
             pstm.setString(1, "%" + pesquisa + "%");
 
-            logger.debug("Pesquisando: " + pesquisa);
+            logger.info("Pesquisando: " + pesquisa);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
 
                 Procedimento p = new Procedimento();
                 p.setCodigo(rs.getInt("codigo"));
@@ -97,7 +97,7 @@ public class ProcedimentoBD extends CrudBD<Procedimento> {
                 
                 lista.add(p);
             }
-            logger.debug("Pesquisa executada com sucesso");
+            logger.info("Pesquisa executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

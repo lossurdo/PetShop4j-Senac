@@ -2,11 +2,8 @@ package com.jdf.util;
 
 import java.io.File;
 import java.nio.ByteBuffer;
-
+import java.util.Base64;
 import javax.imageio.stream.FileImageInputStream;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 /**
  * Converte imagens para String Base64 e vice-versa
@@ -28,14 +25,13 @@ public final class Image2Base64 {
 	 * @throws Exception
 	 */
 	public static String toString(File file) throws Exception {
-		BASE64Encoder encoder = new BASE64Encoder();
 		FileImageInputStream in = new FileImageInputStream(file);
 		int size = (int) in.length();
 		byte[] b = new byte[size];
 		in.read(b);
 		in.close();
 		ByteBuffer bb = ByteBuffer.wrap(b);
-		return encoder.encodeBuffer(bb);
+		return Base64.getEncoder().encodeToString(bb.array());
 	}
 	
 	/**
@@ -45,7 +41,7 @@ public final class Image2Base64 {
 	 * @throws Exception
 	 */
 	public static byte[] toImage(String string) throws Exception {
-		return new BASE64Decoder().decodeBuffer(string);
+		return Base64.getDecoder().decode(string);
 	}
 	
 }

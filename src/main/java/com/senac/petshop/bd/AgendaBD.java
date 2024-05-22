@@ -39,7 +39,7 @@ public class AgendaBD extends CrudBD<Agenda> {
             pstm.setBoolean(4, bean.getSaidaAnimal());
             pstm.setDouble(5, bean.getValorTotal());
 
-            logger.debug("Salvando: " + bean);
+            logger.info("Salvando: " + bean);
             pstm.execute();
 
             // coleta id do autoincrement
@@ -61,13 +61,13 @@ public class AgendaBD extends CrudBD<Agenda> {
                     pstm.setInt(2, a.getCodigo());
                     pstm.setInt(3, p.getCodigo());
                     
-                    logger.debug("Salvando: " + bean);
+                    logger.info("Salvando: " + bean);
                     pstm.execute();
                 }
             }
             
             commitTransacao(conn);
-            logger.debug("Salvamento executado com sucesso");
+            logger.info("Salvamento executado com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -85,17 +85,17 @@ public class AgendaBD extends CrudBD<Agenda> {
             PreparedStatement pstm = conn.prepareStatement("DELETE FROM agenda_animal WHERE agenda_codigo=?");
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Excluindo: " + bean);
+            logger.info("Excluindo: " + bean);
             pstm.execute();
             
             pstm = conn.prepareStatement("DELETE FROM agenda WHERE codigo=?");            
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Excluindo: " + bean);
+            logger.info("Excluindo: " + bean);
             pstm.execute();
             
             commitTransacao(conn);
-            logger.debug("Exclusão executada com sucesso");
+            logger.info("Exclusão executada com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -119,7 +119,7 @@ public class AgendaBD extends CrudBD<Agenda> {
 
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 
                 Agenda animal = new Agenda(rs.getInt("codigo"));
                 animal.setData(new Date(rs.getTimestamp("data_hora").getTime()));
@@ -154,7 +154,7 @@ public class AgendaBD extends CrudBD<Agenda> {
                 
                 return animal;
             }                        
-            logger.debug("Pesquisa executada com sucesso");
+            logger.info("Pesquisa executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -183,10 +183,10 @@ public class AgendaBD extends CrudBD<Agenda> {
             pstm.setDouble(5, bean.getValorTotal());
             pstm.setInt(6, bean.getCodigo());
 
-            logger.debug("Alterando: " + bean);
+            logger.info("Alterando: " + bean);
             pstm.execute();
             
-            logger.debug("Excluindo N:N");
+            logger.info("Excluindo N:N");
             pstm = conn.prepareStatement("DELETE FROM agenda_animal WHERE agenda_codigo = ?");
             pstm.setInt(1, bean.getCodigo());
             pstm.execute();
@@ -205,13 +205,13 @@ public class AgendaBD extends CrudBD<Agenda> {
                     pstm.setInt(2, a.getCodigo());
                     pstm.setInt(3, p.getCodigo());
                     
-                    logger.debug("Salvando: " + bean);
+                    logger.info("Salvando: " + bean);
                     pstm.execute();
                 }
             }
             
             commitTransacao(conn);
-            logger.debug("Alteração executada com sucesso");
+            logger.info("Alteração executada com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -234,10 +234,10 @@ public class AgendaBD extends CrudBD<Agenda> {
 
             PreparedStatement pstm = conn.prepareStatement(sql.toString());
 
-            logger.debug("Pesquisando: " + pesquisa);
+            logger.info("Pesquisando: " + pesquisa);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 
                 Agenda a = new Agenda(rs.getInt("codigo"));
                 a.setData(new Date(rs.getTimestamp("data_hora").getTime()));
@@ -275,7 +275,7 @@ public class AgendaBD extends CrudBD<Agenda> {
                 }
             }
             
-            logger.debug("Pesquisa executada com sucesso");
+            logger.info("Pesquisa executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

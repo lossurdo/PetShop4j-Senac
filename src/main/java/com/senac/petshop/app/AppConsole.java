@@ -14,11 +14,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.SystemUtils;
-import org.apache.log4j.Logger;
+
 
 /**
  *
@@ -26,14 +27,14 @@ import org.apache.log4j.Logger;
  */
 public class AppConsole {
 
-    private static final Logger logger = Logger.getLogger(AppConsole.class);
+    private static final Logger logger = Logger.getLogger(AppConsole.class.getName());
     
     public static void main(String[] args) throws Exception {
         // informação de versão do java que está rodando
-        logger.debug("Versão de Java: " + SystemUtils.JAVA_VERSION_FLOAT);
-        logger.debug("Java: " + SystemUtils.JAVA_VM_VENDOR);
-        logger.debug("Java instalado em: " + SystemUtils.JAVA_HOME);
-        logger.debug("Sistema operacional: " + SystemUtils.OS_NAME);
+        logger.info("Versão de Java: " + SystemUtils.JAVA_VERSION_FLOAT);
+        logger.info("Java: " + SystemUtils.JAVA_VM_VENDOR);
+        logger.info("Java instalado em: " + SystemUtils.JAVA_HOME);
+        logger.info("Sistema operacional: " + SystemUtils.OS_NAME);
         
         // enquanto não optado por "sair"
         while (true) {
@@ -66,7 +67,7 @@ public class AppConsole {
         Console.cabecalho("Listando Animais vs. Donos");
         DonoRN rn = new DonoRN();
         for (Dono dono : rn.pesquisar("")) {
-            logger.debug(dono);
+            logger.info(dono.toString());
         }
     }
 
@@ -110,9 +111,9 @@ public class AppConsole {
         DonoRN rn = new DonoRN();
         try {
             rn.salvar(dono);
-            logger.debug("Dono cadastrado com sucesso!");
+            logger.info("Dono cadastrado com sucesso!");
         } catch (Exception e) {
-            logger.error("Problema no cadastramento", e);
+            logger.severe("Problema no cadastramento: " + e.getMessage());
         }
     }
 
@@ -173,9 +174,9 @@ public class AppConsole {
             AnimalRN rn = new AnimalRN();
             try {
                 rn.salvar(a);
-                logger.debug("Animal cadastrado e vinculado ao seu Dono com sucesso!");
+                logger.info("Animal cadastrado e vinculado ao seu Dono com sucesso!");
             } catch (Exception e) {
-                logger.error("Problema no cadastramento", e);
+                logger.severe("Problema no cadastramento: " + e.getMessage());
             }
         } while (!cadastroOK);
     }

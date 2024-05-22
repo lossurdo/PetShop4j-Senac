@@ -7,7 +7,8 @@ import com.senac.petshop.bean.TipoAnimal;
 import com.senac.petshop.rn.AnimalRN;
 import com.senac.petshop.rn.DonoRN;
 import java.util.Date;
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
+
 
 /**
  * Classe criada para agilizar as demonstrações
@@ -25,10 +26,10 @@ import org.apache.log4j.Logger;
  */
 public class CadastradorAutomatico {
     
-    private static final Logger logger = Logger.getLogger(CadastradorAutomatico.class);
+    private static final Logger logger = Logger.getLogger(CadastradorAutomatico.class.getName());
     
     public static final void popular() {
-        logger.debug("Populando automaticamente dados no banco para fins de testes");
+        logger.info("Populando automaticamente dados no banco para fins de testes");
         
         Dono d1 = new Dono(123);
         d1.setCpf("123456789");
@@ -68,7 +69,7 @@ public class CadastradorAutomatico {
         animalRN.salvar(a1);
         animalRN.salvar(a2);
 
-        logger.debug("Dados populados com sucesso!");
+        logger.info("Dados populados com sucesso!");
     }
     
 }

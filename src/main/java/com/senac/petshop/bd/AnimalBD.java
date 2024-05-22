@@ -39,10 +39,10 @@ public class AnimalBD extends CrudBD<Animal> {
             pstm.setString(5, bean.getCorPredominante().toString());
             pstm.setInt(6, bean.getDono().getCodigo());
 
-            logger.debug("Salvando: " + bean);
+            logger.info("Salvando: " + bean);
             pstm.execute();
             commitTransacao(conn);
-            logger.debug("Salvamento executado com sucesso");
+            logger.info("Salvamento executado com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -60,10 +60,10 @@ public class AnimalBD extends CrudBD<Animal> {
             PreparedStatement pstm = conn.prepareStatement("DELETE FROM animal WHERE codigo=?");
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Excluindo: " + bean);
+            logger.info("Excluindo: " + bean);
             pstm.execute();
             commitTransacao(conn);
-            logger.debug("Exclusão executada com sucesso");
+            logger.info("Exclusão executada com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -83,10 +83,10 @@ public class AnimalBD extends CrudBD<Animal> {
             PreparedStatement pstm = conn.prepareStatement("SELECT * FROM animal WHERE codigo=?");
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Consultando: " + bean);
+            logger.info("Consultando: " + bean);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 animalRetorno = new Animal();
                 animalRetorno.setCodigo(rs.getInt("codigo"));
                 animalRetorno.setNome(rs.getString("nome"));
@@ -99,7 +99,7 @@ public class AnimalBD extends CrudBD<Animal> {
                 DonoRN rn = new DonoRN();
                 animalRetorno.setDono(rn.consultaDonoPorAnimal(animalRetorno));
             }
-            logger.debug("Consulta executada com sucesso");
+            logger.info("Consulta executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -129,10 +129,10 @@ public class AnimalBD extends CrudBD<Animal> {
             pstm.setDate(5, new java.sql.Date(bean.getDataNascimento().getTime()));
             pstm.setInt(6, bean.getCodigo());
 
-            logger.debug("Salvando: " + bean);
+            logger.info("Salvando: " + bean);
             pstm.execute();
             commitTransacao(conn);
-            logger.debug("Salvamento executado com sucesso");
+            logger.info("Salvamento executado com sucesso");
         } catch (Exception e) {
             rollbackTransacao(conn);
             throw new RuntimeException(e);
@@ -152,10 +152,10 @@ public class AnimalBD extends CrudBD<Animal> {
             PreparedStatement pstm = conn.prepareStatement("SELECT * FROM animal WHERE nome like ?");
             pstm.setString(1, "%" + pesquisa + "%");
 
-            logger.debug("Consultando: " + pesquisa);
+            logger.info("Consultando: " + pesquisa);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
                 Animal animalRetorno = new Animal();
                 animalRetorno.setCodigo(rs.getInt("codigo"));
                 animalRetorno.setNome(rs.getString("nome"));
@@ -170,7 +170,7 @@ public class AnimalBD extends CrudBD<Animal> {
 
                 lista.add(animalRetorno);
             }
-            logger.debug("Consulta executada com sucesso");
+            logger.info("Consulta executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -190,10 +190,10 @@ public class AnimalBD extends CrudBD<Animal> {
             PreparedStatement pstm = conn.prepareStatement("SELECT * FROM animal WHERE dono_codigo=?");
             pstm.setInt(1, bean.getCodigo());
 
-            logger.debug("Consultando: " + bean);
+            logger.info("Consultando: " + bean);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                logger.debug("Registro encontrado");
+                logger.info("Registro encontrado");
 
                 Animal animalRetorno = new Animal();
                 animalRetorno.setCodigo(rs.getInt("codigo"));
@@ -205,7 +205,7 @@ public class AnimalBD extends CrudBD<Animal> {
 
                 lista.add(animalRetorno);
             }
-            logger.debug("Consulta executada com sucesso");
+            logger.info("Consulta executada com sucesso");
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
